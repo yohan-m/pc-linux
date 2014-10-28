@@ -3,6 +3,8 @@
 
 #include <QUdpSocket>
 #include <QTimer>
+#include <QDebug>
+#include "wifiFrame.h"
 
 class UdpSocket : public QUdpSocket
 {
