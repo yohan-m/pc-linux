@@ -1,0 +1,103 @@
+\hypertarget{classUdpSocket}{\section{Udp\-Socket Class Reference}
+\label{classUdpSocket}\index{Udp\-Socket@{Udp\-Socket}}
+}
+
+
+Socket udp of the remote pc.  
+
+
+
+
+{\ttfamily \#include $<$Udp\-Socket.\-h$>$}
+
+Inheritance diagram for Udp\-Socket\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classUdpSocket}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classUdpSocket_a3aba1f82aae7c3dc2b0b8487740a4c46}{write} ()
+\begin{DoxyCompactList}\small\item\em Send a wifi\-Frame to the drone. \end{DoxyCompactList}\item 
+void \hyperlink{classUdpSocket_a4f575273cf1629ed4a46d33b9d955100}{read} ()
+\begin{DoxyCompactList}\small\item\em Read the wifi\-Frame received from the drone. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classUdpSocket_acd386cff2c60fcd786883c8cfa117df8}{Udp\-Socket} ()
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{classUdpSocket_abab90176dae0818d9025f605209e0ce3}{process\-Datagram} (wifi\-Frame wf)
+\begin{DoxyCompactList}\small\item\em Extract the data from the frame. \end{DoxyCompactList}\item 
+\hypertarget{classUdpSocket_ad9113c74edc6e658057f5d6e42311d37}{int {\bfseries get\-Pos\-X} ()}\label{classUdpSocket_ad9113c74edc6e658057f5d6e42311d37}
+
+\item 
+\hypertarget{classUdpSocket_a07cf9a3e1a2d5cb67d78a27acd705538}{int {\bfseries get\-Pos\-Y} ()}\label{classUdpSocket_a07cf9a3e1a2d5cb67d78a27acd705538}
+
+\item 
+\hypertarget{classUdpSocket_ac99a86841514a4ef770763ff182b20e1}{int {\bfseries get\-Pos\-Z} ()}\label{classUdpSocket_ac99a86841514a4ef770763ff182b20e1}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Socket udp of the remote pc. 
+
+This class allows to read frames or to send them to the drone \par
+Getters allow the user interface to get the positions received and update their displays 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classUdpSocket_acd386cff2c60fcd786883c8cfa117df8}{\index{Udp\-Socket@{Udp\-Socket}!Udp\-Socket@{Udp\-Socket}}
+\index{Udp\-Socket@{Udp\-Socket}!UdpSocket@{Udp\-Socket}}
+\subsubsection[{Udp\-Socket}]{\setlength{\rightskip}{0pt plus 5cm}Udp\-Socket\-::\-Udp\-Socket (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classUdpSocket_acd386cff2c60fcd786883c8cfa117df8}
+
+
+Constructor. 
+
+Bind a port in share\-Adress mode. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classUdpSocket_abab90176dae0818d9025f605209e0ce3}{\index{Udp\-Socket@{Udp\-Socket}!process\-Datagram@{process\-Datagram}}
+\index{process\-Datagram@{process\-Datagram}!UdpSocket@{Udp\-Socket}}
+\subsubsection[{process\-Datagram}]{\setlength{\rightskip}{0pt plus 5cm}void Udp\-Socket\-::process\-Datagram (
+\begin{DoxyParamCaption}
+\item[{wifi\-Frame}]{wf}
+\end{DoxyParamCaption}
+)}}\label{classUdpSocket_abab90176dae0818d9025f605209e0ce3}
+
+
+Extract the data from the frame. 
+
+Update the positions atributes of the class with the data received \hypertarget{classUdpSocket_a4f575273cf1629ed4a46d33b9d955100}{\index{Udp\-Socket@{Udp\-Socket}!read@{read}}
+\index{read@{read}!UdpSocket@{Udp\-Socket}}
+\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}void Udp\-Socket\-::read (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classUdpSocket_a4f575273cf1629ed4a46d33b9d955100}
+
+
+Read the wifi\-Frame received from the drone. 
+
+It emits a signal to update the user interface with the values received. If the wifi frame is a discovery frame, it sends back the frame to the drone. \hypertarget{classUdpSocket_a3aba1f82aae7c3dc2b0b8487740a4c46}{\index{Udp\-Socket@{Udp\-Socket}!write@{write}}
+\index{write@{write}!UdpSocket@{Udp\-Socket}}
+\subsubsection[{write}]{\setlength{\rightskip}{0pt plus 5cm}void Udp\-Socket\-::write (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classUdpSocket_a3aba1f82aae7c3dc2b0b8487740a4c46}
+
+
+Send a wifi\-Frame to the drone. 
+
+Also used in local to test the behaviour in reception 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/mathieu/drone-\/project/pc-\/linux/src/Udp\-Socket.\-h\item 
+/home/mathieu/drone-\/project/pc-\/linux/src/Udp\-Socket.\-cpp\end{DoxyCompactItemize}
