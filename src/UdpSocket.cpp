@@ -2,67 +2,92 @@
 
 UdpSocket::UdpSocket() : QUdpSocket()
 {
-    bind(QHostAddress::Local,31000) ;
+    bind(31000,QUdpSocket::ShareAddress) ;
 
     QObject::connect(this,SIGNAL(readyRead()),this,SLOT(read())) ;
 
+    //Init of the timer which will call the write function each period
     timer = new QTimer() ;
-    timer->setInterval(1000) ;
+    timer->setInterval(500) ;
     QObject::connect(timer,SIGNAL(timeout()),this,SLOT(write())) ;
     timer->start() ;
+
+    posX = 0 ;
+    posY = 0 ;
+    posZ = 0 ;
+
+    //Used to test the real time display with incremented values sent from localhost
+    counterX = 0 ;
+    counterY = 0 ;
+    counterZ = 0 ;   
 }
 
 void UdpSocket::write()
 {
-    u_int32_t data1 = 3 ;
-    u_int32_t data2 = 4 ;
-    u_int32_t data3 = 5 ;
-    u_int32_t data4 = 6 ;
-
     //Creation of the frame
     wifiFrame wf ;
-    wf = createWifiFrame(TIME_FRAME,data1,data2,data3,data4) ;
+    wf = createWifiFrame(TIME_FRAME,++counterX,++counterY,++counterZ,4) ;
 
     //Conversion of the frame in *char
-    char tab[19] ;
-    wifiFrameToChar(wf,tab) ;
+    char * tab = wifiFrameToChar(wf) ;
 
     //Send the frame
-    qint16 nbBit = writeDatagram(tab, sizeof(char)*19, QHostAddress::Localhost,31000) ;
-    qDebug() << "nbBit: " << nbBit ;
+    writeDatagram(tab, sizeof(char)*19, QHostAddress::LocalHost, 31000) ;
 }
 
 void UdpSocket::read()
 {
-     qDebug() << "Reception: " ;
      while (hasPendingDatagrams())
      {
-         QByteArray datagram;
-         datagram.resize(pendingDatagramSize());
-
-         QHostAddress sender;
+         QHostAddress sender ;
          quint16 senderPort;
 
+         //Read the frame and store it in tab
          char tab[19] ;
-         qint16 taille = (qint16)sizeof(char)*19 ;
-         readDatagram(tab, taille , &sender, &senderPort) ;
+         readDatagram(tab, sizeof(char)*19, &sender, &senderPort) ;
 
-         wifiFrame wf2 ;
-         wf2 = wifiFrameFromChar(tab) ;
+         wifiFrame wf ;
+         wf = wifiFrameFromChar(tab) ;
 
-         qDebug() << "Message from: " << sender.toString();
-         qDebug() << "Message port: " << senderPort;
-         qDebug() << "Num: " << wf2.seqNum ;
-         qDebug() << "data1: " << wf2.data[0] ;
-         qDebug() << "data2: " << wf2.data[1] ;
-         qDebug() << "data3: " << wf2.data[2] ;
-         qDebug() << "data4: " << wf2.data[3] ;
+
+         if(wf.type == DISCOVERY_FRAME)
+         {
+            //Send back the discovery frame received to the sender
+            char * tab = wifiFrameToChar(wf) ;
+            writeDatagram(tab,sizeof(char)*19, sender, senderPort) ;
+         }
+         else
+            processDatagram(wf) ;
      }
+}
 
-     processDatagram() ;
+void UdpSocket::processDatagram(wifiFrame wf)
+{
+    qDebug() << "Num: " << wf.seqNum ;
+    qDebug() << "Type: " << wf.type ;
+    qDebug() << "data1: " << wf.data[0] ;
+    qDebug() << "data2: " << wf.data[1] ;
+    qDebug() << "data3: " << wf.data[2] ;
+    qDebug() << "data4: " << wf.data[3] ;
+
+    posX = wf.data[0] ;
+    posY = wf.data[1] ;
+    posZ = wf.data[2] ;
+}
+
+int UdpSocket::getPosX()
+{
+    return posX ;
 }
 
 
-void UdpSocket::processDatagram()
+int UdpSocket::getPosY()
 {
+    return posY ;
+}
+
+
+int UdpSocket::getPosZ()
+{
+    return posZ ;
 }

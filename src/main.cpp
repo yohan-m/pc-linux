@@ -1,13 +1,17 @@
-#include <QCoreApplication>
+#include <QApplication>
+#include <qwt_plot.h>
+#include "Window.h"
 #include "UdpSocket.h"
+#include "Plot.h"
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    QApplication app(argc, argv);
 
-    UdpSocket udpSocket ;
+    Window window ;
+    window.show() ;
 
-    return a.exec();
+    return app.exec();
 }
 
 
