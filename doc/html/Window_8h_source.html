@@ -94,51 +94,66 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;UdpSocket.h&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;Plot.h&quot;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classWindow.html">   18</a></span>&#160;<span class="keyword">class </span><a class="code" href="classWindow.html">Window</a> : <span class="keyword">public</span> QWidget</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    Q_OBJECT</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="classWindow.html">Window</a>() ;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        ~<a class="code" href="classWindow.html">Window</a>() ;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordtype">void</span> initWindow() ;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keywordtype">void</span> initWidgets() ;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">public</span> slots:</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordtype">void</span> connect();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordtype">void</span> disconnect();</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordtype">void</span> update();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="comment">//Qt widgets</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        QPushButton *buttonConnect ;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        QPushButton *buttonDisconnect ;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        QLabel *labelX ;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        QLabel *labelY ;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        QLabel *labelZ ;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        QLabel *valueX ;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        QLabel *valueY ;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        QLabel *valueZ ;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="comment">//Qwt widgets</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <a class="code" href="classPlot.html">Plot</a> *plot ;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        QwtSlider *slider ;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="comment">//UdpSocket</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <a class="code" href="classUdpSocket.html">UdpSocket</a> *udpSocket ;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;};</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#endif // WINDOW_H</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classWindow.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="classWindow.html">Window</a> : <span class="keyword">public</span> QWidget</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    Q_OBJECT</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classWindow.html">Window</a>() ;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        ~<a class="code" href="classWindow.html">Window</a>() ;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classWindow.html#aad5118913017eb418cab8b4c216f57aa">initWindow</a>() ;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classWindow.html#af2ff981e828f1aa24957e8080fed33a4">initWidgets</a>() ;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">public</span> slots:</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classWindow.html#a2733bcfa9a07113324b66e01a89a1fb8">connect</a>();</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classWindow.html#a96a44a2584b9848d058aadff91ce4d20">disconnect</a>();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classWindow.html#a59515fc5a56e86d5a46d771595daac55">update</a>();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classWindow.html#af0f9e6300d2355fbbcbc04ec3bcbf76a">simu</a>() ;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="comment">//Qt widgets</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        QPushButton *buttonConnect ;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        QPushButton *buttonDisconnect ;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        QPushButton *buttonSimu ;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        QLabel *labelX ;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        QLabel *labelY ;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        QLabel *labelZ ;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        QLabel *valueX ;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        QLabel *valueY ;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        QLabel *valueZ ;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="comment">//Qwt widgets</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <a class="code" href="classPlot.html">Plot</a> *plot ;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        QwtSlider *slider ;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="comment">//UdpSocket</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <a class="code" href="classUdpSocket.html">UdpSocket</a> *udpSocket ;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordtype">bool</span> socketIsActive ;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;};</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#endif // WINDOW_H</span></div>
+<div class="ttc" id="classWindow_html_aad5118913017eb418cab8b4c216f57aa"><div class="ttname"><a href="classWindow.html#aad5118913017eb418cab8b4c216f57aa">Window::initWindow</a></div><div class="ttdeci">void initWindow()</div><div class="ttdoc">Center and set the size of the window. </div><div class="ttdef"><b>Definition:</b> Window.cpp:18</div></div>
+<div class="ttc" id="classWindow_html_a96a44a2584b9848d058aadff91ce4d20"><div class="ttname"><a href="classWindow.html#a96a44a2584b9848d058aadff91ce4d20">Window::disconnect</a></div><div class="ttdeci">void disconnect()</div><div class="ttdoc">Delete the udpSocket. </div><div class="ttdef"><b>Definition:</b> Window.cpp:105</div></div>
+<div class="ttc" id="classWindow_html_a2733bcfa9a07113324b66e01a89a1fb8"><div class="ttname"><a href="classWindow.html#a2733bcfa9a07113324b66e01a89a1fb8">Window::connect</a></div><div class="ttdeci">void connect()</div><div class="ttdoc">Create a udp Socket waiting a frame to read. </div><div class="ttdef"><b>Definition:</b> Window.cpp:98</div></div>
 <div class="ttc" id="classPlot_html"><div class="ttname"><a href="classPlot.html">Plot</a></div><div class="ttdoc">2D display widget </div><div class="ttdef"><b>Definition:</b> Plot.h:16</div></div>
-<div class="ttc" id="classWindow_html"><div class="ttname"><a href="classWindow.html">Window</a></div><div class="ttdoc">Main window of the GUI. </div><div class="ttdef"><b>Definition:</b> Window.h:18</div></div>
-<div class="ttc" id="classUdpSocket_html"><div class="ttname"><a href="classUdpSocket.html">UdpSocket</a></div><div class="ttdoc">Socket udp of the remote pc. </div><div class="ttdef"><b>Definition:</b> UdpSocket.h:17</div></div>
+<div class="ttc" id="classWindow_html"><div class="ttname"><a href="classWindow.html">Window</a></div><div class="ttdoc">Main window of the GUI. </div><div class="ttdef"><b>Definition:</b> Window.h:16</div></div>
+<div class="ttc" id="classWindow_html_a59515fc5a56e86d5a46d771595daac55"><div class="ttname"><a href="classWindow.html#a59515fc5a56e86d5a46d771595daac55">Window::update</a></div><div class="ttdeci">void update()</div><div class="ttdoc">Update the display. </div><div class="ttdef"><b>Definition:</b> Window.cpp:77</div></div>
+<div class="ttc" id="classWindow_html_af0f9e6300d2355fbbcbc04ec3bcbf76a"><div class="ttname"><a href="classWindow.html#af0f9e6300d2355fbbcbc04ec3bcbf76a">Window::simu</a></div><div class="ttdeci">void simu()</div><div class="ttdoc">Simulation. </div><div class="ttdef"><b>Definition:</b> Window.cpp:111</div></div>
+<div class="ttc" id="classUdpSocket_html"><div class="ttname"><a href="classUdpSocket.html">UdpSocket</a></div><div class="ttdoc">Udp socket of the remote pc. </div><div class="ttdef"><b>Definition:</b> UdpSocket.h:17</div></div>
+<div class="ttc" id="classWindow_html_af2ff981e828f1aa24957e8080fed33a4"><div class="ttname"><a href="classWindow.html#af2ff981e828f1aa24957e8080fed33a4">Window::initWidgets</a></div><div class="ttdeci">void initWidgets()</div><div class="ttdoc">Instanciate and initialize all widgets. </div><div class="ttdef"><b>Definition:</b> Window.cpp:27</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Nov 2 2014 18:16:53 for GUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Nov 11 2014 16:57:55 for GUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

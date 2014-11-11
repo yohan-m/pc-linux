@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['plot',['Plot',['../classPlot.html',1,'']]],
-  ['processdatagram',['processDatagram',['../classUdpSocket.html#abab90176dae0818d9025f605209e0ce3',1,'UdpSocket']]]
+  ['connect',['connect',['../classWindow.html#a2733bcfa9a07113324b66e01a89a1fb8',1,'Window']]]
 ];

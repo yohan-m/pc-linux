@@ -106,36 +106,97 @@ Inheritance diagram for Window:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
 <tr class="memitem:a2733bcfa9a07113324b66e01a89a1fb8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2733bcfa9a07113324b66e01a89a1fb8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>connect</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWindow.html#a2733bcfa9a07113324b66e01a89a1fb8">connect</a> ()</td></tr>
+<tr class="memdesc:a2733bcfa9a07113324b66e01a89a1fb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a udp Socket waiting a frame to read. <br/></td></tr>
 <tr class="separator:a2733bcfa9a07113324b66e01a89a1fb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96a44a2584b9848d058aadff91ce4d20"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a96a44a2584b9848d058aadff91ce4d20"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>disconnect</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWindow.html#a96a44a2584b9848d058aadff91ce4d20">disconnect</a> ()</td></tr>
+<tr class="memdesc:a96a44a2584b9848d058aadff91ce4d20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete the udpSocket. <br/></td></tr>
 <tr class="separator:a96a44a2584b9848d058aadff91ce4d20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59515fc5a56e86d5a46d771595daac55"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59515fc5a56e86d5a46d771595daac55"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> ()</td></tr>
+<tr class="memitem:a59515fc5a56e86d5a46d771595daac55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWindow.html#a59515fc5a56e86d5a46d771595daac55">update</a> ()</td></tr>
+<tr class="memdesc:a59515fc5a56e86d5a46d771595daac55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the display.  <a href="#a59515fc5a56e86d5a46d771595daac55">More...</a><br/></td></tr>
 <tr class="separator:a59515fc5a56e86d5a46d771595daac55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0f9e6300d2355fbbcbc04ec3bcbf76a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWindow.html#af0f9e6300d2355fbbcbc04ec3bcbf76a">simu</a> ()</td></tr>
+<tr class="memdesc:af0f9e6300d2355fbbcbc04ec3bcbf76a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simulation.  <a href="#af0f9e6300d2355fbbcbc04ec3bcbf76a">More...</a><br/></td></tr>
+<tr class="separator:af0f9e6300d2355fbbcbc04ec3bcbf76a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aad5118913017eb418cab8b4c216f57aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad5118913017eb418cab8b4c216f57aa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>initWindow</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWindow.html#aad5118913017eb418cab8b4c216f57aa">initWindow</a> ()</td></tr>
+<tr class="memdesc:aad5118913017eb418cab8b4c216f57aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Center and set the size of the window. <br/></td></tr>
 <tr class="separator:aad5118913017eb418cab8b4c216f57aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2ff981e828f1aa24957e8080fed33a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af2ff981e828f1aa24957e8080fed33a4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>initWidgets</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWindow.html#af2ff981e828f1aa24957e8080fed33a4">initWidgets</a> ()</td></tr>
+<tr class="memdesc:af2ff981e828f1aa24957e8080fed33a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instanciate and initialize all widgets. <br/></td></tr>
 <tr class="separator:af2ff981e828f1aa24957e8080fed33a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Main window of the GUI. </p>
-<p>This class allows to instanciate, organize and update the qt and qwt widgets used for the display. <br/>
-We can also connect or disconnect from the drone and get the drone's position in real time thanks to an udpSocket attribute. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<p>This class allows to instanciate, organize and update Qwt widgets (a 2D graphical widget and a read-only cursor) used for the display. <br/>
+We can also connect or disconnect from the drone and get the drone's position in real time thanks to an udpSocket attribute.<br/>
+</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="af0f9e6300d2355fbbcbc04ec3bcbf76a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Window::simu </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Simulation. </p>
+<p>This slot is called when the button "Simulation Display" is clicked It allows to simulate a real time display by sending a frame with 3D position from localhost each 100ms </p>
+
+</div>
+</div>
+<a class="anchor" id="a59515fc5a56e86d5a46d771595daac55"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Window::update </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Update the display. </p>
+<p>This slot is called each time a frame is read It gets the new position received to update the display </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/mathieu/drone-project/pc-linux/src/<a class="el" href="Window_8h_source.html">Window.h</a></li>
 <li>/home/mathieu/drone-project/pc-linux/src/Window.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Nov 2 2014 18:16:53 for GUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Nov 11 2014 16:57:55 for GUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

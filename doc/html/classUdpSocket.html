@@ -83,6 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-slots">Public Slots</a> &#124;
+<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classUdpSocket-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -90,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Socket udp of the remote pc.  
+<p>Udp socket of the remote pc.  
  <a href="classUdpSocket.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="UdpSocket_8h_source.html">UdpSocket.h</a>&gt;</code></p>
@@ -112,6 +113,13 @@ Public Slots</h2></td></tr>
 <tr class="memdesc:a4f575273cf1629ed4a46d33b9d955100"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the wifiFrame received from the drone.  <a href="#a4f575273cf1629ed4a46d33b9d955100">More...</a><br/></td></tr>
 <tr class="separator:a4f575273cf1629ed4a46d33b9d955100"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
+Signals</h2></td></tr>
+<tr class="memitem:a41699e943c35a0c4800339dda6378c1a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a41699e943c35a0c4800339dda6378c1a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUdpSocket.html#a41699e943c35a0c4800339dda6378c1a">wifiFrameRead</a> ()</td></tr>
+<tr class="memdesc:a41699e943c35a0c4800339dda6378c1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal emitted just after the data has been extracted from the frame. <br/></td></tr>
+<tr class="separator:a41699e943c35a0c4800339dda6378c1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acd386cff2c60fcd786883c8cfa117df8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUdpSocket.html#acd386cff2c60fcd786883c8cfa117df8">UdpSocket</a> ()</td></tr>
@@ -120,20 +128,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abab90176dae0818d9025f605209e0ce3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUdpSocket.html#abab90176dae0818d9025f605209e0ce3">processDatagram</a> (wifiFrame wf)</td></tr>
 <tr class="memdesc:abab90176dae0818d9025f605209e0ce3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract the data from the frame.  <a href="#abab90176dae0818d9025f605209e0ce3">More...</a><br/></td></tr>
 <tr class="separator:abab90176dae0818d9025f605209e0ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9113c74edc6e658057f5d6e42311d37"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9113c74edc6e658057f5d6e42311d37"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getPosX</b> ()</td></tr>
-<tr class="separator:ad9113c74edc6e658057f5d6e42311d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07cf9a3e1a2d5cb67d78a27acd705538"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07cf9a3e1a2d5cb67d78a27acd705538"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getPosY</b> ()</td></tr>
-<tr class="separator:a07cf9a3e1a2d5cb67d78a27acd705538"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac99a86841514a4ef770763ff182b20e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac99a86841514a4ef770763ff182b20e1"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getPosZ</b> ()</td></tr>
-<tr class="separator:ac99a86841514a4ef770763ff182b20e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9027f05a3011cfeb721f13b6b4ebfe22"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9027f05a3011cfeb721f13b6b4ebfe22"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUdpSocket.html#a9027f05a3011cfeb721f13b6b4ebfe22">simuDisplay</a> ()</td></tr>
+<tr class="memdesc:a9027f05a3011cfeb721f13b6b4ebfe22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send positions from localhost to test the display. <br/></td></tr>
+<tr class="separator:a9027f05a3011cfeb721f13b6b4ebfe22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9aa45b147b289964cc0b7329cd7a5914"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9aa45b147b289964cc0b7329cd7a5914"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>getPosX</b> ()</td></tr>
+<tr class="separator:a9aa45b147b289964cc0b7329cd7a5914"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a869fdf42ad8a27d4de332a75ac34f929"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a869fdf42ad8a27d4de332a75ac34f929"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>getPosY</b> ()</td></tr>
+<tr class="separator:a869fdf42ad8a27d4de332a75ac34f929"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a169aee91c3c451adcc8a08853c8c4a67"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a169aee91c3c451adcc8a08853c8c4a67"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>getPosZ</b> ()</td></tr>
+<tr class="separator:a169aee91c3c451adcc8a08853c8c4a67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Socket udp of the remote pc. </p>
-<p>This class allows to read frames or to send them to the drone <br/>
-Getters allow the user interface to get the positions received and update their displays </p>
+<div class="textblock"><p>Udp socket of the remote pc. </p>
+<p>This class allows to read frames or to send them to the drone. <br/>
+Getters allow the user interface to get the positions received and update their displays. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="acd386cff2c60fcd786883c8cfa117df8"></a>
 <div class="memitem">
@@ -169,7 +181,13 @@ Getters allow the user interface to get the positions received and update their 
 </div><div class="memdoc">
 
 <p>Extract the data from the frame. </p>
-<p>Update the positions atributes of the class with the data received </p>
+<p>Update the positions atributes of the class with the data received</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wf</td><td>: The frame from which we extract data </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -232,7 +250,7 @@ Getters allow the user interface to get the positions received and update their 
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Nov 2 2014 18:16:53 for GUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Nov 11 2014 16:57:55 for GUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

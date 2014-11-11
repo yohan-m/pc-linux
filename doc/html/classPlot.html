@@ -107,28 +107,63 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5eace135e8f9b8c0bd89e2b0e24f1387"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5eace135e8f9b8c0bd89e2b0e24f1387"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Plot</b> (QWidget *parent)</td></tr>
 <tr class="separator:a5eace135e8f9b8c0bd89e2b0e24f1387"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bc3ac75ac24d391b15df0a5f1f9b4e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3bc3ac75ac24d391b15df0a5f1f9b4e4"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>drawCanvas</b> (QPainter *painter)</td></tr>
+<tr class="memitem:a3bc3ac75ac24d391b15df0a5f1f9b4e4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPlot.html#a3bc3ac75ac24d391b15df0a5f1f9b4e4">drawCanvas</a> (QPainter *painter)</td></tr>
+<tr class="memdesc:a3bc3ac75ac24d391b15df0a5f1f9b4e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw the position.  <a href="#a3bc3ac75ac24d391b15df0a5f1f9b4e4">More...</a><br/></td></tr>
 <tr class="separator:a3bc3ac75ac24d391b15df0a5f1f9b4e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2a97dc7b52d3adfd23b199e1c318caf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af2a97dc7b52d3adfd23b199e1c318caf"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPosX</b> (int x)</td></tr>
-<tr class="separator:af2a97dc7b52d3adfd23b199e1c318caf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad85fa5495b49b1bdda900df70bc20183"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad85fa5495b49b1bdda900df70bc20183"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPosY</b> (int y)</td></tr>
-<tr class="separator:ad85fa5495b49b1bdda900df70bc20183"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a4e7375c552c33515df09d7671a6c38"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a4e7375c552c33515df09d7671a6c38"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setPosX</b> (double x)</td></tr>
+<tr class="separator:a0a4e7375c552c33515df09d7671a6c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2ba814735257a7a0e0c469886b0cdc5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab2ba814735257a7a0e0c469886b0cdc5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setPosY</b> (double y)</td></tr>
+<tr class="separator:ab2ba814735257a7a0e0c469886b0cdc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>2D display widget </p>
-<p>This class inherits QwtPlot and allow to display a two dimensionel graph. <br/>
+<p>This class inherits QwtPlot and allows to display a two dimensionel graph. <br/>
 It is used for a 2D display of the drone's position. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a3bc3ac75ac24d391b15df0a5f1f9b4e4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Plot::drawCanvas </td>
+          <td>(</td>
+          <td class="paramtype">QPainter *&#160;</td>
+          <td class="paramname"><em>painter</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Draw the position. </p>
+<p>This function is called each time the position needs to be redrawn <br/>
+Convert the drone's position in the widget's coordinates</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">painter</td><td>: Painter used for drawing </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/mathieu/drone-project/pc-linux/src/<a class="el" href="Plot_8h_source.html">Plot.h</a></li>
 <li>/home/mathieu/drone-project/pc-linux/src/Plot.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Nov 2 2014 18:16:53 for GUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Nov 11 2014 16:57:55 for GUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

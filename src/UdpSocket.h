@@ -8,7 +8,7 @@
 
 
 /*! \class UdpSocket
- * \brief Socket udp of the remote pc
+ * \brief Udp socket of the remote pc
  *
  * This class allows to read frames or to send them to the drone. \n
  * Getters allow the user interface to get the positions received and update their displays.
@@ -33,12 +33,21 @@ class UdpSocket : public QUdpSocket
          *
          * Update the positions atributes of the class with the data received
          *
+         * \param wf : The frame from which we extract data
+         *
          */
         void processDatagram(wifiFrame wf) ;
 
-        int getPosX() ;
-        int getPosY() ;
-        int getPosZ() ;
+
+        /*!
+         * \brief Send positions from localhost to test the display
+         *
+         */
+        void simuDisplay() ;
+
+        double getPosX() ;
+        double getPosY() ;
+        double getPosZ() ;
 
     public slots:
 
@@ -57,16 +66,24 @@ class UdpSocket : public QUdpSocket
          */
         void read() ;
 
+    signals:
+
+        /*!
+         * \brief Signal emitted just after the data has been extracted from the frame
+         *
+         */
+        void wifiFrameRead();
+
     private:
         QTimer *timer ;
 
-        int posX ;
-        int posY ;
-        int posZ ;
-        double counterX ;
-        double counterY ;
-        double counterZ ;
-
+        double posX ;
+        double posY ;
+        double posZ ;
+        int counterX ;
+        int counterY ;
+        int counterZ ;
+        bool simu ;
 };
 
 #endif // UDPSOCKET_H

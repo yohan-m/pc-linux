@@ -7,6 +7,9 @@ Window::Window()
 
     QObject::connect(buttonDisconnect,SIGNAL(clicked()),this,SLOT(disconnect())) ;
     QObject::connect(buttonConnect,SIGNAL(clicked()),this,SLOT(connect())) ;
+    QObject::connect(buttonSimu,SIGNAL(clicked()),this,SLOT(simu())) ;
+
+    socketIsActive = false ;
 }
 
 Window::~Window()
@@ -26,6 +29,7 @@ void Window::initWidgets()
     //Control widgets
     buttonConnect = new QPushButton("Connect") ;
     buttonDisconnect = new QPushButton("Disconnect") ;
+    buttonSimu = new QPushButton("Simulation Display") ;
 
     labelX = new QLabel("X");
     labelX->setAlignment(Qt::AlignCenter);
@@ -41,12 +45,13 @@ void Window::initWidgets()
     QGridLayout *grid = new QGridLayout() ;
     grid->addWidget(buttonConnect,0,0);
     grid->addWidget(buttonDisconnect,0,1);
-    grid->addWidget(labelX,1,0);
-    grid->addWidget(valueX,1,1);
-    grid->addWidget(labelY,2,0);
-    grid->addWidget(valueY,2,1);
-    grid->addWidget(labelZ,3,0);
-    grid->addWidget(valueZ,3,1);
+    grid->addWidget(buttonSimu,1,0);
+    grid->addWidget(labelX,2,0);
+    grid->addWidget(valueX,2,1);
+    grid->addWidget(labelY,3,0);
+    grid->addWidget(valueY,3,1);
+    grid->addWidget(labelZ,4,0);
+    grid->addWidget(valueZ,4,1);
 
     //2D display widget
     plot = new Plot(this) ;
@@ -54,7 +59,8 @@ void Window::initWidgets()
     //Height slider
     slider = new QwtSlider() ;
     slider->setScalePosition(QwtSlider::LeadingScale);
-    slider->setScale(0,5) ;
+    slider->setReadOnly(true);
+    slider->setScale(0,3.5) ;
     slider->setScaleStepSize(0.25);
     slider->setContentsMargins(30,20,20,10);
     slider->setFixedHeight(600);
@@ -71,9 +77,9 @@ void Window::initWidgets()
 void Window::update()
 {
     //Get the new position sent from the drone
-    int x = udpSocket->getPosX() ;
-    int y = udpSocket->getPosY() ;
-    int z = udpSocket->getPosZ() ;
+    double x = udpSocket->getPosX() ;
+    double y = udpSocket->getPosY() ;
+    double z = udpSocket->getPosZ() ;
 
     //Update label
     valueX->setText(QString::number(x));
@@ -87,17 +93,25 @@ void Window::update()
 
     //Update height slider
     slider->setValue(z);
-
 }
 
 void Window::connect()
 {
+    socketIsActive = true ;
     udpSocket = new UdpSocket() ;
-    QObject::connect(udpSocket,SIGNAL(readyRead()),this,SLOT(update())) ;
+    QObject::connect(udpSocket,SIGNAL(wifiFrameRead()),this,SLOT(update())) ;
 }
 
 void Window::disconnect()
 {
+    socketIsActive = false ;
     delete udpSocket ;
 }
+
+void Window::simu()
+{
+    if(socketIsActive)
+        udpSocket->simuDisplay();
+}
+
 

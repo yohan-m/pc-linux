@@ -10,10 +10,10 @@ Plot::Plot(QWidget *parent) : QwtPlot(parent)
     grid->attach(this);*/
 
     setAxisScale(QwtPlot::xBottom,0,8,0.5);
-    setAxisScale(QwtPlot::yLeft,0,10,0.5);
+    setAxisScale(QwtPlot::yLeft,0,4,0.5);
 
-    setAxisTitle(QwtPlot::xBottom,QString("Length")) ;
-    setAxisTitle(QwtPlot::yLeft,QString("Width")) ;
+    setAxisTitle(QwtPlot::xBottom,QString("Length (m)")) ;
+    setAxisTitle(QwtPlot::yLeft,QString("Width (m)")) ;
 
     setCanvasBackground(Qt::white);
 
@@ -32,12 +32,12 @@ void Plot::drawCanvas(QPainter *painter)
     painter->drawEllipse(x,y,10,10) ;
 }
 
-void Plot::setPosX(int x)
+void Plot::setPosX(double x)
 {
     posX = x;
 }
 
-void Plot::setPosY(int y)
+void Plot::setPosY(double y)
 {
     posY = y;
 }

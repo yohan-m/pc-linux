@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['window',['Window',['../classWindow.html',1,'']]],
-  ['write',['write',['../classUdpSocket.html#a3aba1f82aae7c3dc2b0b8487740a4c46',1,'UdpSocket']]]
+  ['plot',['Plot',['../classPlot.html',1,'']]],
+  ['processdatagram',['processDatagram',['../classUdpSocket.html#abab90176dae0818d9025f605209e0ce3',1,'UdpSocket']]]
 ];

@@ -17,16 +17,26 @@ class Plot :  public QwtPlot
 {
     public:
         Plot(QWidget *parent);
+
+        /*!
+         * \brief Draw the position
+         *
+         * This function is called each time the position needs to be redrawn \n
+         * Convert the drone's position in the widget's coordinates
+         *
+         * \param painter : Painter used for drawing
+         *
+         */
         virtual void drawCanvas (QPainter *painter) ;
 
-        void setPosX(int x);
-        void setPosY(int y);
+        void setPosX(double x);
+        void setPosY(double y);
 
 private:
         QwtPlotGrid *grid ;
 
-        int posX ;
-        int posY ;
+        double posX ;
+        double posY ;
 };
 
 #endif // PLOT_H
