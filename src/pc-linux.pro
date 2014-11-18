@@ -12,11 +12,17 @@ LIBS += -L/usr/local/qwt-6.1.1/lib -lqwt
 HEADERS += \
     UdpSocket.h \
     Window.h \
-    Plot.h
+    Plot.h \
+    NavControl/dronecontrol.h \
+    NavControl/dronenavdata.h \
+    NavControl/navcontrolui.h
 
 SOURCES += \
     UdpSocket.cpp \
     ../../common-sources/src/wifiFrame.cpp \
     main.cpp \
     Window.cpp \
-    Plot.cpp
+    Plot.cpp \
+    NavControl/dronecontrol.cpp \
+    NavControl/dronenavdata.cpp \
+    NavControl/navcontrolui.cpp

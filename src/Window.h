@@ -5,6 +5,7 @@
 #include <qwt_slider.h>
 #include "UdpSocket.h"
 #include "Plot.h"
+#include "NavControl/navcontrolui.h"
 
 /*! \class Window
  *  \brief Main window of the GUI
@@ -87,6 +88,9 @@ class Window : public QWidget
         //UdpSocket
         UdpSocket *udpSocket ;
         bool socketIsActive ;
+
+        //NavControl
+        navControlUI * navControl;
 
 };
 

@@ -17,7 +17,7 @@ Window::~Window()
 
 void Window::initWindow()
 {   
-    setFixedSize(1200,700);
+    setFixedSize(1500,700);
 
     QDesktopWidget desktop ;
     QWidget *screen = desktop.screen() ;
@@ -65,11 +65,15 @@ void Window::initWidgets()
     slider->setContentsMargins(30,20,20,10);
     slider->setFixedHeight(600);
 
+    //Control box
+    navControl = new navControlUI();
+
     //Main Layout
     QHBoxLayout *layout = new QHBoxLayout() ;
     layout->addLayout(grid) ;
     layout->addWidget(plot) ;
     layout->addWidget(slider);
+    layout->addLayout(navControl);
 
     this->setLayout(layout);
 }
