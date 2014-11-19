@@ -251,6 +251,8 @@ void navControlUI::controlManager()
     seqNumber++;
 }
 
+
+
 void navControlUI::onClickInitControl()
 {
     timer->start(30);
@@ -379,9 +381,22 @@ void navControlUI::onChangeBat(int bat)
 
 void navControlUI::onChangeState(int state)
 {
+    char* tab[10] = {"Default","Control Init","Landed","Flying","Hovering","Test","TakeOff","GoToFix","Landing","Looping"} ;
     char data[64];
-    sprintf(data,"%d",state);
-    stateLabel->setText(data);
+
+    int i = state >> 16 ;
+
+    if( i<10 )
+    {
+        sprintf(data,"%s",tab[i]);
+        stateLabel->setText(data);
+    }
+    else
+    {
+        sprintf(data,"error");
+        stateLabel->setText(data);
+    }
+
 }
 
 void navControlUI::onChangeAlt(int alt)

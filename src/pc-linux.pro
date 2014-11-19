@@ -15,7 +15,8 @@ HEADERS += \
     Plot.h \
     NavControl/dronecontrol.h \
     NavControl/dronenavdata.h \
-    NavControl/navcontrolui.h
+    NavControl/navcontrolui.h \
+    struct.h
 
 SOURCES += \
     UdpSocket.cpp \

@@ -68,6 +68,9 @@ class Window : public QWidget
          */
         void simu() ;
 
+        virtual void keyPressEvent(QKeyEvent* event);
+        virtual void keyReleaseEvent(QKeyEvent* event);
+
     private:
         //Qt widgets
         QPushButton *buttonConnect ;

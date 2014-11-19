@@ -1,4 +1,5 @@
 #include "dronenavdata.h"
+#include "struct.h"
 
 droneNavData::droneNavData(droneControl * control_init) : QUdpSocket()
 {
@@ -53,17 +54,28 @@ int droneNavData::write(const char * data, int size)
 
 void droneNavData::slotRead()
 {
-    int cnt_bytes = 0;
     QHostAddress sender ;
     quint16 senderPort;
-    char tab[1024] ;
+    QByteArray datagram;
+
 
     while (hasPendingDatagrams())
     {
-        cnt_bytes = readDatagram(tab, sizeof(char)*1024, &sender, &senderPort) ;
+        datagram.resize(pendingDatagramSize());
 
-        qDebug() << "read " << cnt_bytes << " bytes : " << tab;
+        readDatagram(datagram.data(), datagram.size(), &sender, &senderPort) ;
 
-        //Then emit signals to display battery, altitude, vx, etc...
+        Navdata *nav = (Navdata*) datagram.data() ;
+        NavdataDemo *navdataDemo = (NavdataDemo*) &nav->options[0] ;
+
+        emit newBat(navdataDemo->vbat) ;
+        emit newState(navdataDemo->ctrl_state) ;
+        emit newAlt(navdataDemo->altitude/10);
+        emit newPitch(navdataDemo->theta/1000);
+        emit newRoll(navdataDemo->phi/1000);
+        emit newYaw(navdataDemo->psi/1000);
+        emit newVx(navdataDemo->vx);
+        emit newVy(navdataDemo->vy);
+        emit newVz(navdataDemo->vz);
     }
 }

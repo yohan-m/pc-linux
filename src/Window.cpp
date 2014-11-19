@@ -10,6 +10,7 @@ Window::Window()
     QObject::connect(buttonSimu,SIGNAL(clicked()),this,SLOT(simu())) ;
 
     socketIsActive = false ;
+    setFocusPolicy(Qt::StrongFocus) ;
 }
 
 Window::~Window()
@@ -118,4 +119,59 @@ void Window::simu()
         udpSocket->simuDisplay();
 }
 
+void Window::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Left)
+    {
+        navControl->onClickLeft() ;
+    }
+    else if(event->key() == Qt::Key_Right)
+    {
+        navControl->onClickRight() ;
+    }
+    else if(event->key() == Qt::Key_Up)
+    {
+        navControl->onClickForward() ;
+    }
+    else if(event->key() == Qt::Key_Down)
+    {
+        navControl->onClickBackward(); ;
+    }
+    else if(event->key() == Qt::Key_0)
+    {
+        navControl->onClickDown();
+    }
+    else if(event->key() == Qt::Key_1)
+    {
+        navControl->onClickUp();
+    }
+}
+
+void Window::keyReleaseEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Left)
+    {
+        navControl->onReleaseLeft();
+    }
+    else if(event->key() == Qt::Key_Right)
+    {
+        navControl->onReleaseRight();
+    }
+    else if(event->key() == Qt::Key_Up)
+    {
+        navControl->onReleaseForward();
+    }
+    else if(event->key() == Qt::Key_Down)
+    {
+        navControl->onReleaseBackward();
+    }
+    else if(event->key() == Qt::Key_0)
+    {
+        navControl->onReleaseDown();
+    }
+    else if(event->key() == Qt::Key_1)
+    {
+        navControl->onReleaseUp();
+    }
+}
 

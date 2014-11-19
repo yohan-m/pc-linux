@@ -76,8 +76,6 @@ private:
 signals:
 
 public slots:
-
-private slots:
     void onClickInitControl();
     void onClickStopControl();
     void onClickCalib();
@@ -100,6 +98,7 @@ private slots:
     void onClickRLeft();
     void onReleaseRLeft();
 
+private slots:
     void onClickInitNavData();
     void onChangeBat(int bat);
     void onChangeState(int state);
