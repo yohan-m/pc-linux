@@ -30,22 +30,6 @@ int droneControl::sendResetWatchdog(int seqNum)
     }
 
     return 0;
-
-
-
-
-    /*char resetWatchdog[11] = "AT*COMWDG\r";
-
-    qDebug() << QString(resetWatchdog);
-
-    int cnt_bytes = write((const char *)resetWatchdog,10);
-
-    if(cnt_bytes!=10) {
-        qDebug() << "Failed to send reset watchdog";
-        return -1;
-    }
-
-    return 0;*/
 }
 
 
@@ -149,7 +133,60 @@ int droneControl::sendLand(int seqNum)
 }
 
 
+int droneControl::sendMovement(int seqNum, int flag, float leftRightTilt, float frontBackTilt, float verticalSpeed, float angularSpeed)
+{
+    std::string seq = NumberToString(seqNum);
+    std::string cflag = NumberToString(flag);
+
+    int lrTilt_int = *(int*)&leftRightTilt;
+    int fbTilt_int = *(int*)&frontBackTilt;
+    int vSpeed_int = *(int*)&verticalSpeed;
+    int aSpeed_int = *(int*)&angularSpeed;
+    std::string lrTilt = NumberToString(lrTilt_int);
+    std::string fbTilt = NumberToString(fbTilt_int);
+    std::string vSpeed = NumberToString(vSpeed_int);
+    std::string aSpeed = NumberToString(aSpeed_int);
+
+    char * move = (char *)malloc((14+seq.length()+cflag.length()+lrTilt.length()+fbTilt.length()+vSpeed.length()+aSpeed.length())*sizeof(char));
+
+    memcpy(move,"AT*PCMD=",8);
+    memcpy(&move[8],seq.data(),seq.length());
+    memcpy(&move[8+seq.length()],",",1);
+    memcpy(&move[9+seq.length()],cflag.data(),cflag.length());
+    memcpy(&move[9+seq.length()+cflag.length()],",",1);
+    memcpy(&move[10+seq.length()+cflag.length()],lrTilt.data(),lrTilt.length());
+    memcpy(&move[10+seq.length()+cflag.length()+lrTilt.length()],",",1);
+    memcpy(&move[11+seq.length()+cflag.length()+lrTilt.length()],fbTilt.data(),fbTilt.length());
+    memcpy(&move[11+seq.length()+cflag.length()+lrTilt.length()+fbTilt.length()],",",1);
+    memcpy(&move[12+seq.length()+cflag.length()+lrTilt.length()+fbTilt.length()],vSpeed.data(),vSpeed.length());
+    memcpy(&move[12+seq.length()+cflag.length()+lrTilt.length()+fbTilt.length()+vSpeed.length()],",",1);
+    memcpy(&move[13+seq.length()+cflag.length()+lrTilt.length()+fbTilt.length()+vSpeed.length()],aSpeed.data(),aSpeed.length());
+    memcpy(&move[13+seq.length()+cflag.length()+lrTilt.length()+fbTilt.length()+vSpeed.length()+aSpeed.length()],"\r",1);
+
+    qDebug() << QString(move);
+
+    int cnt_bytes = write((const char *)move,14+seq.length()+cflag.length()+lrTilt.length()+fbTilt.length()+vSpeed.length()+aSpeed.length());
+
+    delete move;
+
+    if(cnt_bytes!=(14+seq.length()+cflag.length()+lrTilt.length()+fbTilt.length()+vSpeed.length()+aSpeed.length())) {
+        qDebug() << "Failed to send land";
+        return -1;
+    }
+
+    return 0;
+}
+
+
 std::string droneControl::NumberToString (int Number)
+{
+     std::ostringstream ss;
+     ss << Number;
+     return ss.str();
+}
+
+
+std::string droneControl::NumberToString (float Number)
 {
      std::ostringstream ss;
      ss << Number;

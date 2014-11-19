@@ -24,10 +24,9 @@ int droneNavData::init(int seqNum)
     memcpy(&cfg[10],seq.data(),seq.length());
     memcpy(&cfg[10+seq.length()],",\"general:navdata_demo\",\"TRUE\"\r",31);
 
-    //char cfg[43]  = "AT*CONFIG=2,\"general:navdata_demo\",\"TRUE\"\r";
     int err = control->write((const char *)cfg,41+seq.length());
     qDebug() << cfg;
-    if(err!=0) {
+    if(err!=(41+seq.length())) {
         qDebug() << "Failed to send cfg packet";
         return -1;
     }
@@ -65,6 +64,6 @@ void droneNavData::slotRead()
 
         qDebug() << "read " << cnt_bytes << " bytes : " << tab;
 
-        //Then emit signals to display altitude, vx, etc...
+        //Then emit signals to display battery, altitude, vx, etc...
     }
 }

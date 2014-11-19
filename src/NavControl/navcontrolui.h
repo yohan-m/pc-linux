@@ -7,6 +7,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QGridLayout>
+#include <QTimer>
 #include "dronecontrol.h"
 #include "dronenavdata.h"
 
@@ -19,11 +20,11 @@ public:
 private:
     QGroupBox * controlBox;
     droneControl * control;
-    QPushButton * emergencyButton;
+    QPushButton * initControlButton;
+    QPushButton * stopControlButton;
     QPushButton * calibButton;
     QPushButton * takeOffButton;
     QPushButton * landButton;
-    QPushButton * rstWatchdogButton;
     QPushButton * upButton;
     QPushButton * downButton;
     QPushButton * forwardButton;
@@ -36,43 +37,80 @@ private:
 
     QGroupBox * navBox;
     droneNavData * navData;
-    QPushButton * initButton;
+    QPushButton * initNavDataButton;
     QVBoxLayout * navLayout;
     QLabel * batLabel;
+    QLabel * stateLabel;
     QLabel * altLabel;
+    QLabel * pitchLabel;
+    QLabel * rollLabel;
+    QLabel * yawLabel;
     QLabel * vxLabel;
     QLabel * vyLabel;
     QLabel * vzLabel;
 
     int seqNumber;
+    bool movement;
+    bool landClicked;
+    bool calibClicked;
+    bool takeOffClicked;
+    bool upClicked;
+    bool upPressed;
+    bool downClicked;
+    bool downPressed;
+    bool forwardClicked;
+    bool forwardPressed;
+    bool backwardClicked;
+    bool backwardPressed;
+    bool rightClicked;
+    bool rightPressed;
+    bool leftClicked;
+    bool leftPressed;
+    bool rRightClicked;
+    bool rRightPressed;
+    bool rLeftClicked;
+    bool rLeftPressed;
+
+    QTimer * timer;
 
 signals:
 
 public slots:
 
 private slots:
-    void onClickEmergency();
+    void onClickInitControl();
+    void onClickStopControl();
     void onClickCalib();
     void onClickTakeOff();
     void onClickLand();
-    void onClickrstWatchdog();
-
     void onClickUp();
+    void onReleaseUp();
     void onClickDown();
+    void onReleaseDown();
     void onClickForward();
+    void onReleaseForward();
     void onClickRight();
+    void onReleaseRight();
     void onClickBackward();
+    void onReleaseBackward();
     void onClickLeft();
+    void onReleaseLeft();
     void onClickRRight();
+    void onReleaseRRight();
     void onClickRLeft();
+    void onReleaseRLeft();
 
+    void onClickInitNavData();
     void onChangeBat(int bat);
+    void onChangeState(int state);
+    void onChangePitch(int pitch);
+    void onChangeRoll(int roll);
+    void onChangeYaw(int yaw);
     void onChangeAlt(int alt);
     void onChangeVx(int vx);
     void onChangeVy(int vy);
     void onChangeVz(int vz);
 
-    void onClickInit();
-
+    void controlManager();
 };
 #endif // NAVCONTROLUI_H
