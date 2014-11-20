@@ -8,14 +8,20 @@
 #include <QLabel>
 #include <QGridLayout>
 #include <QTimer>
+#include <QPixmap>
+#include <cmath>
 #include "dronecontrol.h"
 #include "dronenavdata.h"
+#include "qfi_ADI.h"
+#include "qfi_HSI.h"
+#include "qfi_ASI.h"
 
 class navControlUI : public QVBoxLayout
 {
     Q_OBJECT
 public:
     explicit navControlUI(QWidget *parent = 0);
+    void takeOffOrLand();
 
 private:
     QGroupBox * controlBox;
@@ -39,8 +45,6 @@ private:
     droneNavData * navData;
     QPushButton * initNavDataButton;
     QVBoxLayout * navLayout;
-    QLabel * batLabel;
-    QLabel * stateLabel;
     QLabel * altLabel;
     QLabel * pitchLabel;
     QLabel * rollLabel;
@@ -49,7 +53,20 @@ private:
     QLabel * vyLabel;
     QLabel * vzLabel;
 
+    qfi_ADI * adi;
+    qfi_HSI * hsi;
+    qfi_ASI * asi;
+
+    QLabel * batLabel;
+    QLabel * batImg;
+    QLabel * stateLabel;
+    QLabel * stateImg;
+    QPixmap * checkMarkImage;
+    QPixmap * warningMarkImage;
+    QPixmap * xMarkImage;
+
     int seqNumber;
+    bool flying;
     bool movement;
     bool landClicked;
     bool calibClicked;
@@ -74,6 +91,7 @@ private:
     QTimer * timer;
 
 signals:
+    void newAlt(int alt);
 
 public slots:
     void onClickInitControl();
@@ -100,16 +118,7 @@ public slots:
 
 private slots:
     void onClickInitNavData();
-    void onChangeBat(int bat);
-    void onChangeState(int state);
-    void onChangePitch(int pitch);
-    void onChangeRoll(int roll);
-    void onChangeYaw(int yaw);
-    void onChangeAlt(int alt);
-    void onChangeVx(int vx);
-    void onChangeVy(int vy);
-    void onChangeVz(int vz);
-
+    void onChangeNavData(int bat, int state, int pitch, int roll, int yaw, int alt, int vx, int vy, int vz);
     void controlManager();
 };
 #endif // NAVCONTROLUI_H

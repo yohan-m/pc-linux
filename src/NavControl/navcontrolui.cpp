@@ -25,6 +25,20 @@ navControlUI::navControlUI(QWidget *parent) :
     rLeftButton = new QPushButton("RLeft");
     rRightButton = new QPushButton("RRight");
 
+    initControlButton->setFocusPolicy( Qt::NoFocus );
+    stopControlButton->setFocusPolicy( Qt::NoFocus );
+    calibButton->setFocusPolicy( Qt::NoFocus );
+    takeOffButton->setFocusPolicy( Qt::NoFocus );
+    landButton->setFocusPolicy( Qt::NoFocus );
+    upButton->setFocusPolicy( Qt::NoFocus );
+    downButton->setFocusPolicy( Qt::NoFocus );
+    forwardButton->setFocusPolicy( Qt::NoFocus );
+    leftButton->setFocusPolicy( Qt::NoFocus );
+    backwardButton->setFocusPolicy( Qt::NoFocus );
+    rightButton->setFocusPolicy( Qt::NoFocus );
+    rLeftButton->setFocusPolicy( Qt::NoFocus );
+    rRightButton->setFocusPolicy( Qt::NoFocus );
+
     QHBoxLayout * upDownLayout = new QHBoxLayout();
     upDownLayout->addWidget(upButton);
     upDownLayout->addWidget(downButton);
@@ -45,7 +59,7 @@ navControlUI::navControlUI(QWidget *parent) :
     controlLayout->addLayout(upDownLayout);
     controlLayout->addLayout(grid);
     controlBox->setLayout(controlLayout);
-    controlBox->setFixedSize(250,330);
+    //controlBox->setFixedSize(250,260);
 
     QObject::connect(initControlButton,SIGNAL(clicked()),this,SLOT(onClickInitControl()));
     QObject::connect(stopControlButton,SIGNAL(clicked()),this,SLOT(onClickStopControl()));
@@ -73,93 +87,57 @@ navControlUI::navControlUI(QWidget *parent) :
     //NavData Box
     navBox = new QGroupBox("NavData");
     navData = new droneNavData(control);
+    adi = new qfi_ADI();
+    hsi = new qfi_HSI();
+    asi = new qfi_ASI();
+
+    QHBoxLayout * hsiAsiLayout = new QHBoxLayout();
+    hsiAsiLayout->addWidget(hsi);
+    hsiAsiLayout->addWidget(asi);
 
     initNavDataButton = new QPushButton("Init");
 
+    initNavDataButton->setFocusPolicy( Qt::NoFocus );
+
+    checkMarkImage = new QPixmap(":/img/images/checkmark16.png");
+    warningMarkImage = new QPixmap(":/img/images/warningmark16.png");
+    xMarkImage = new QPixmap(":/img/images/xmark16.png");
+
     QHBoxLayout * batLayout = new QHBoxLayout();
-    QLabel * batTxt = new QLabel("Bat = ");
-    batLabel = new QLabel("0");
-    batLayout->addWidget(batTxt,0,Qt::AlignLeft);
+    batImg = new QLabel();
+    batImg->setPixmap(*xMarkImage);
+    batLabel = new QLabel("Battery:\n0%");
+    batLayout->addWidget(batImg,0,Qt::AlignLeft);
     batLayout->addWidget(batLabel,1,Qt::AlignLeft);
 
     QHBoxLayout * stateLayout = new QHBoxLayout();
-    QLabel * stateTxt = new QLabel("State = ");
-    stateLabel = new QLabel("0");
-    stateLayout->addWidget(stateTxt,0,Qt::AlignLeft);
+    stateImg = new QLabel();
+    stateImg->setPixmap(*xMarkImage);
+    stateLabel = new QLabel("State:\nDefault");
+    stateLayout->addWidget(stateImg,0,Qt::AlignCenter);
     stateLayout->addWidget(stateLabel,1,Qt::AlignLeft);
 
-    QHBoxLayout * altLayout = new QHBoxLayout();
-    QLabel * altTxt = new QLabel("Alt = ");
-    altLabel = new QLabel("0");
-    altLayout->addWidget(altTxt,0,Qt::AlignLeft);
-    altLayout->addWidget(altLabel,1,Qt::AlignLeft);
-
-    QHBoxLayout * pitchLayout = new QHBoxLayout();
-    QLabel * pitchTxt = new QLabel("Pitch = ");
-    pitchLabel = new QLabel("0");
-    pitchLayout->addWidget(pitchTxt,0,Qt::AlignLeft);
-    pitchLayout->addWidget(pitchLabel,1,Qt::AlignLeft);
-
-    QHBoxLayout * rollLayout = new QHBoxLayout();
-    QLabel * rollTxt = new QLabel("Roll = ");
-    rollLabel = new QLabel("0");
-    rollLayout->addWidget(rollTxt,0,Qt::AlignLeft);
-    rollLayout->addWidget(rollLabel,1,Qt::AlignLeft);
-
-    QHBoxLayout * yawLayout = new QHBoxLayout();
-    QLabel * yawTxt = new QLabel("Yaw = ");
-    yawLabel = new QLabel("0");
-    yawLayout->addWidget(yawTxt,0,Qt::AlignLeft);
-    yawLayout->addWidget(yawLabel,1,Qt::AlignLeft);
-
-    QHBoxLayout * vxLayout = new QHBoxLayout();
-    QLabel * vxTxt = new QLabel("Vx = ");
-    vxLabel = new QLabel("0");
-    vxLayout->addWidget(vxTxt,0,Qt::AlignLeft);
-    vxLayout->addWidget(vxLabel,1,Qt::AlignLeft);
-
-    QHBoxLayout * vyLayout = new QHBoxLayout();
-    QLabel * vyTxt = new QLabel("Vy = ");
-    vyLabel = new QLabel("0");
-    vyLayout->addWidget(vyTxt,0,Qt::AlignLeft);
-    vyLayout->addWidget(vyLabel,1,Qt::AlignLeft);
-
-    QHBoxLayout * vzLayout = new QHBoxLayout();
-    QLabel * vzTxt = new QLabel("Vz = ");
-    vzLabel = new QLabel("0");
-    vzLayout->addWidget(vzTxt,0,Qt::AlignLeft);
-    vzLayout->addWidget(vzLabel,1,Qt::AlignLeft);
+    QHBoxLayout * batStateLayout = new QHBoxLayout();
+    batStateLayout->addLayout(batLayout);
+    batStateLayout->addLayout(stateLayout);
 
     navLayout = new QVBoxLayout();
     navLayout->addWidget(initNavDataButton);
-    navLayout->addLayout(batLayout);
-    navLayout->addLayout(stateLayout);
-    navLayout->addLayout(pitchLayout);
-    navLayout->addLayout(rollLayout);
-    navLayout->addLayout(yawLayout);
-    navLayout->addLayout(altLayout);
-    navLayout->addLayout(vxLayout);
-    navLayout->addLayout(vyLayout);
-    navLayout->addLayout(vzLayout);
+    navLayout->addWidget(adi,0,Qt::AlignCenter);
+    navLayout->addLayout(hsiAsiLayout);
+    navLayout->addLayout(batStateLayout);
     navBox->setLayout(navLayout);
-    navBox->setFixedSize(200,280);
+    navBox->setFixedHeight(390);
 
     QObject::connect(initNavDataButton,SIGNAL(clicked()),this,SLOT(onClickInitNavData()));
-    QObject::connect(navData,SIGNAL(newBat(int)),this,SLOT(onChangeBat(int)));
-    QObject::connect(navData,SIGNAL(newState(int)),this,SLOT(onChangeState(int)));
-    QObject::connect(navData,SIGNAL(newPitch(int)),this,SLOT(onChangePitch(int)));
-    QObject::connect(navData,SIGNAL(newRoll(int)),this,SLOT(onChangeRoll(int)));
-    QObject::connect(navData,SIGNAL(newYaw(int)),this,SLOT(onChangeYaw(int)));
-    QObject::connect(navData,SIGNAL(newAlt(int)),this,SLOT(onChangeAlt(int)));
-    QObject::connect(navData,SIGNAL(newVx(int)),this,SLOT(onChangeVx(int)));
-    QObject::connect(navData,SIGNAL(newVy(int)),this,SLOT(onChangeVy(int)));
-    QObject::connect(navData,SIGNAL(newVz(int)),this,SLOT(onChangeVz(int)));
+    QObject::connect(navData,SIGNAL(newNavData(int, int, int, int, int, int, int, int, int)),this,SLOT(onChangeNavData(int, int, int, int, int, int, int, int, int)));
 
     //Widget
     addWidget(controlBox,0,Qt::AlignTop);
-    addWidget(navBox,0,Qt::AlignTop);
+    addWidget(navBox,1,Qt::AlignTop);
 
     seqNumber = 1;
+    flying = false;
 
     movement = false;
     landClicked = false;
@@ -188,6 +166,11 @@ navControlUI::navControlUI(QWidget *parent) :
 
 void navControlUI::controlManager()
 {
+    float lrTilt = 0.0;
+    float fbTilt = 0.0;
+    float vSpeed = 0.0;
+    float aSpeed = 0.0;
+
     if(landClicked) {
         control->sendLand(seqNumber);
         landClicked = false;
@@ -200,44 +183,40 @@ void navControlUI::controlManager()
         control->sendTakeOff(seqNumber);
         takeOffClicked = false;
     }
-    else if (upClicked || upPressed) {
-        control->sendMovement(seqNumber,1,0.0,0.0,0.5,0.0);
-        upClicked = false;
-        movement = true;
-    }
-    else if (downClicked || downPressed) {
-        control->sendMovement(seqNumber,1,0.0,0.0,-0.5,0.0);
-        downClicked = false;
-        movement = true;
-    }
-    else if (forwardClicked || forwardPressed) {
-        control->sendMovement(seqNumber,1,0.0,-0.5,0.0,0.0);
-        forwardClicked = false;
-        movement = true;
-    }
-    else if (backwardClicked || backwardPressed) {
-        control->sendMovement(seqNumber,1,0.0,0.5,0.0,0.0);
-        backwardClicked = false;
-        movement = true;
-    }
-    else if (rightClicked || rightPressed) {
-        control->sendMovement(seqNumber,1,0.5,0.0,0.0,0.0);
-        rightClicked = false;
-        movement = true;
-    }
-    else if (leftClicked || leftPressed) {
-        control->sendMovement(seqNumber,1,-0.5,0.0,0.0,0.0);
-        leftClicked = false;
-        movement = true;
-    }
-    else if (rLeftClicked || rLeftPressed) {
-        control->sendMovement(seqNumber,1,0.0,0.0,0.0,0.6);
-        rLeftClicked = false;
-        movement = true;
-    }
-    else if (rRightClicked || rRightPressed) {
-        control->sendMovement(seqNumber,1,0.0,0.0,0.0,-0.6);
-        rRightClicked = false;
+    else if (upClicked || upPressed || downClicked || downPressed || forwardClicked || forwardPressed || backwardClicked || backwardPressed || rightClicked || rightPressed || leftClicked || leftPressed || rLeftClicked || rLeftPressed || rRightClicked || rRightPressed) {
+        if (upClicked || upPressed) {
+            vSpeed += 0.6;
+            upClicked = false;
+        }
+        if (downClicked || downPressed) {
+            vSpeed += -0.6;
+            downClicked = false;
+        }
+        if (forwardClicked || forwardPressed) {
+            fbTilt += -0.4;
+            forwardClicked = false;
+        }
+        if (backwardClicked || backwardPressed) {
+            fbTilt += 0.4;
+            backwardClicked = false;
+        }
+        if (rightClicked || rightPressed) {
+            lrTilt += 0.4;
+            rightClicked = false;
+        }
+        if (leftClicked || leftPressed) {
+            lrTilt += -0.4;
+            leftClicked = false;
+        }
+        if (rLeftClicked || rLeftPressed) {
+            aSpeed += 0.6;
+            rLeftClicked = false;
+        }
+        if (rRightClicked || rRightPressed) {
+            aSpeed += -0.6;
+            rRightClicked = false;
+        }
+        control->sendMovement(seqNumber,1,lrTilt,fbTilt,vSpeed,aSpeed);
         movement = true;
     }
     else if (movement) {
@@ -250,8 +229,6 @@ void navControlUI::controlManager()
 
     seqNumber++;
 }
-
-
 
 void navControlUI::onClickInitControl()
 {
@@ -271,11 +248,13 @@ void navControlUI::onClickCalib()
 void navControlUI::onClickTakeOff()
 {
     takeOffClicked = true;
+    flying = true;
 }
 
 void navControlUI::onClickLand()
 {
     landClicked = true;
+    flying = false;
 }
 
 void navControlUI::onClickUp()
@@ -368,83 +347,71 @@ void navControlUI::onReleaseRRight()
 
 void navControlUI::onClickInitNavData()
 {
+    //onChangeNavData(50,7<<16,10,10,45,2,50,50,50);
     navData->init(seqNumber);
     seqNumber++;
 }
 
-void navControlUI::onChangeBat(int bat)
+void navControlUI::onChangeNavData(int bat, int state, int pitch, int roll, int yaw, int alt, int vx, int vy, int vz)
 {
-    char data[64];
-    sprintf(data,"%d",bat);
-    batLabel->setText(data);
-}
+    //battery
+    if(bat > 25) {
+        batImg->setPixmap(*checkMarkImage);
+    }
+    else if(bat > 0) {
+        batImg->setPixmap(*warningMarkImage);
+    }
+    else {
+        batImg->setPixmap(*xMarkImage);
+    }
+    char batData[64];
+    sprintf(batData,"%d",bat);
+    batLabel->setText("Battery:\n"+QString(batData)+"%");
 
-void navControlUI::onChangeState(int state)
-{
-    char* tab[10] = {"Default","Control Init","Landed","Flying","Hovering","Test","TakeOff","GoToFix","Landing","Looping"} ;
-    char data[64];
-
+    //state
+    char* stateTab[10] = {(char *)"Default",(char *)"Control Init",(char *)"Landed",(char *)"Flying",(char *)"Hovering",(char *)"Test",(char *)"GoToFix",(char *)"TakeOff",(char *)"Intermediate",(char *)"Landing"} ;
+    char stateData[64];
     int i = state >> 16 ;
-
     if( i<10 )
     {
-        sprintf(data,"%s",tab[i]);
-        stateLabel->setText(data);
+        if(state==0) {
+            stateImg->setPixmap(*xMarkImage);
+        }
+        else {
+            stateImg->setPixmap(*checkMarkImage);
+        }
+        sprintf(stateData,"%s",stateTab[i]);
+        stateLabel->setText("State:\n"+QString(stateData));
     }
     else
     {
-        sprintf(data,"error");
-        stateLabel->setText(data);
+        stateImg->setPixmap(*warningMarkImage);
+        sprintf(stateData,"error");
+        stateLabel->setText(stateData);
     }
 
+    //pitch/roll
+    adi->setPitch(pitch);
+    adi->setRoll(roll);
+    adi->update();
+
+    //heading
+    hsi->setHeading(yaw);
+    hsi->update();
+
+    //speed
+    asi->setAirspeed(sqrt(pow(vx,2)+pow(vy,2)+pow(vz,2)));
+    asi->update();
+
+    emit newAlt(alt);
 }
 
-void navControlUI::onChangeAlt(int alt)
+void navControlUI::takeOffOrLand()
 {
-    char data[64];
-    sprintf(data,"%d",alt);
-    altLabel->setText(data);
+    if(!flying) {
+        onClickTakeOff();
+    }
+    else {
+        onClickLand();
+    }
 }
-
-void navControlUI::onChangePitch(int pitch)
-{
-    char data[64];
-    sprintf(data,"%d",pitch);
-    pitchLabel->setText(data);
-}
-
-void navControlUI::onChangeRoll(int roll)
-{
-    char data[64];
-    sprintf(data,"%d",roll);
-    rollLabel->setText(data);
-}
-
-void navControlUI::onChangeYaw(int yaw)
-{
-    char data[64];
-    sprintf(data,"%d",yaw);
-    yawLabel->setText(data);
-}
-
-void navControlUI::onChangeVx(int vx)
-{
-    char data[64];
-    sprintf(data,"%d",vx);
-    vxLabel->setText(data);
-}
-
-void navControlUI::onChangeVy(int vy)
-{
-    char data[64];
-    sprintf(data,"%d",vy);
-    vyLabel->setText(data);
-}
-
-void navControlUI::onChangeVz(int vz)
-{
-    char data[64];
-    sprintf(data,"%d",vz);
-    vzLabel->setText(data);
-}
-

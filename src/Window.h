@@ -70,6 +70,7 @@ class Window : public QWidget
 
         virtual void keyPressEvent(QKeyEvent* event);
         virtual void keyReleaseEvent(QKeyEvent* event);
+        void onChangeAltitudeByBarometer(int alt);
 
     private:
         //Qt widgets

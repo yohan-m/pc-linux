@@ -8,6 +8,7 @@ Window::Window()
     QObject::connect(buttonDisconnect,SIGNAL(clicked()),this,SLOT(disconnect())) ;
     QObject::connect(buttonConnect,SIGNAL(clicked()),this,SLOT(connect())) ;
     QObject::connect(buttonSimu,SIGNAL(clicked()),this,SLOT(simu())) ;
+    QObject::connect(navControl,SIGNAL(newAlt(int)),this,SLOT(onChangeAltitudeByBarometer(int)));
 
     socketIsActive = false ;
     setFocusPolicy(Qt::StrongFocus) ;
@@ -100,6 +101,13 @@ void Window::update()
     slider->setValue(z);
 }
 
+
+void Window::onChangeAltitudeByBarometer(int alt)
+{
+    valueZ->setText(QString::number(alt));
+    slider->setValue(alt);
+}
+
 void Window::connect()
 {
     socketIsActive = true ;
@@ -137,13 +145,21 @@ void Window::keyPressEvent(QKeyEvent *event)
     {
         navControl->onClickBackward(); ;
     }
-    else if(event->key() == Qt::Key_0)
+    else if(event->key() == Qt::Key_2)
     {
         navControl->onClickDown();
     }
-    else if(event->key() == Qt::Key_1)
+    else if(event->key() == Qt::Key_8)
     {
         navControl->onClickUp();
+    }
+    else if(event->key() == Qt::Key_4)
+    {
+        navControl->onClickRLeft();
+    }
+    else if(event->key() == Qt::Key_6)
+    {
+        navControl->onClickRRight();
     }
 }
 
@@ -165,13 +181,25 @@ void Window::keyReleaseEvent(QKeyEvent *event)
     {
         navControl->onReleaseBackward();
     }
-    else if(event->key() == Qt::Key_0)
+    else if(event->key() == Qt::Key_2)
     {
         navControl->onReleaseDown();
     }
-    else if(event->key() == Qt::Key_1)
+    else if(event->key() == Qt::Key_8)
     {
         navControl->onReleaseUp();
+    }
+    else if(event->key() == Qt::Key_4)
+    {
+        navControl->onReleaseRLeft();
+    }
+    else if(event->key() == Qt::Key_6)
+    {
+        navControl->onReleaseRRight();
+    }
+    else if(event->key() == Qt::Key_Space)
+    {
+        navControl->takeOffOrLand();
     }
 }
 

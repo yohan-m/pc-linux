@@ -20,15 +20,7 @@ private:
     droneControl * control;
 
 signals:
-    void newBat(int bat);
-    void newState(int state);
-    void newAlt(int alt);
-    void newPitch(int pitch);
-    void newRoll(int roll);
-    void newYaw(int yaw);
-    void newVx(int vx);
-    void newVy(int vy);
-    void newVz(int vz);
+    void newNavData(int bat, int state, int pitch, int roll, int yaw, int alt, int vx, int vy, int vz);
 
 public slots:
 

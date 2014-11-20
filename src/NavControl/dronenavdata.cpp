@@ -68,14 +68,6 @@ void droneNavData::slotRead()
         Navdata *nav = (Navdata*) datagram.data() ;
         NavdataDemo *navdataDemo = (NavdataDemo*) &nav->options[0] ;
 
-        emit newBat(navdataDemo->vbat) ;
-        emit newState(navdataDemo->ctrl_state) ;
-        emit newAlt(navdataDemo->altitude/10);
-        emit newPitch(navdataDemo->theta/1000);
-        emit newRoll(navdataDemo->phi/1000);
-        emit newYaw(navdataDemo->psi/1000);
-        emit newVx(navdataDemo->vx);
-        emit newVy(navdataDemo->vy);
-        emit newVz(navdataDemo->vz);
+        emit newNavData(navdataDemo->vbat, navdataDemo->ctrl_state, navdataDemo->theta/1000, navdataDemo->phi/1000, navdataDemo->psi/1000, navdataDemo->altitude/1000, navdataDemo->vx, navdataDemo->vy, navdataDemo->vz);
     }
 }

@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>images/adi.svg</file>
+        <file>images/adi_back.svg</file>
+        <file>images/adi_case.svg</file>
+        <file>images/adi_face.svg</file>
+        <file>images/adi_ring.svg</file>
+        <file>images/checkmark16.png</file>
+        <file>images/warningmark16.png</file>
+        <file>images/xmark16.png</file>
+        <file>images/asi.svg</file>
+        <file>images/asi_case.svg</file>
+        <file>images/asi_face.svg</file>
+        <file>images/asi_hand.svg</file>
+        <file>images/hsi.svg</file>
+        <file>images/hsi_case.svg</file>
+        <file>images/hsi_face.svg</file>
+        <file>images/hsi_case.png</file>
+    </qresource>
+</RCC>

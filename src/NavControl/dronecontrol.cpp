@@ -18,7 +18,7 @@ int droneControl::sendResetWatchdog(int seqNum)
     memcpy(&rstw[10],seq.data(),seq.length());
     memcpy(&rstw[10+seq.length()],",\r",2);
 
-    qDebug() << QString(rstw);
+    //qDebug() << QString(rstw);
 
     int cnt_bytes = write((const char *)rstw,12+seq.length());
 
