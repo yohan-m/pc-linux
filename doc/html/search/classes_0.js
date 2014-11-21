@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['plot',['Plot',['../classPlot.html',1,'']]]
+  ['dronecontrol',['droneControl',['../classdroneControl.html',1,'']]],
+  ['dronenavdata',['droneNavData',['../classdroneNavData.html',1,'']]]
 ];

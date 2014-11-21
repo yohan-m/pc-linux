@@ -12,19 +12,19 @@ int droneControl::sendResetWatchdog(int seqNum)
 {
     std::string seq = NumberToString(seqNum);
 
-    char * rstw = (char *)malloc((12+seq.length())*sizeof(char));
+    char * rstw = (char *)malloc((11+seq.length())*sizeof(char));
 
     memcpy(rstw,"AT*COMWDG=",10);
     memcpy(&rstw[10],seq.data(),seq.length());
-    memcpy(&rstw[10+seq.length()],",\r",2);
+    memcpy(&rstw[10+seq.length()],"\r",1);
 
     //qDebug() << QString(rstw);
 
-    int cnt_bytes = write((const char *)rstw,12+seq.length());
+    int cnt_bytes = write((const char *)rstw,11+seq.length());
 
     delete rstw;
 
-    if(cnt_bytes!=(12+(int)seq.length())) {
+    if(cnt_bytes!=(11+(int)seq.length())) {
         qDebug() << "Failed to send reset watchdog";
         return -1;
     }
@@ -58,23 +58,47 @@ int droneControl::sendEmergency(int seqNum)
 }
 
 
-int droneControl::sendCalib(int seqNum)
+int droneControl::sendCalibHPlan(int seqNum)
 {
     std::string seq = NumberToString(seqNum);
 
-    char * calib = (char *)malloc((11+seq.length())*sizeof(char));
+    char * calib = (char *)malloc((10+seq.length())*sizeof(char));
 
     memcpy(calib,"AT*FTRIM=",9);
     memcpy(&calib[9],seq.data(),seq.length());
-    memcpy(&calib[9+seq.length()],",\r",2);
+    memcpy(&calib[9+seq.length()],"\r",1);
 
     qDebug() << QString(calib);
 
-    int cnt_bytes = write((const char *)calib,11+seq.length());
+    int cnt_bytes = write((const char *)calib,10+seq.length());
 
     delete calib;
 
-    if(cnt_bytes!=(11+(int)seq.length())) {
+    if(cnt_bytes!=(10+(int)seq.length())) {
+        qDebug() << "Failed to send calib";
+        return -1;
+    }
+
+    return 0;
+}
+
+int droneControl::sendCalibMagn(int seqNum)
+{
+    std::string seq = NumberToString(seqNum);
+
+    char * calib = (char *)malloc((12+seq.length())*sizeof(char));
+
+    memcpy(calib,"AT*CALIB=",9);
+    memcpy(&calib[9],seq.data(),seq.length());
+    memcpy(&calib[9+seq.length()],",0\r",3);
+
+    qDebug() << QString(calib);
+
+    int cnt_bytes = write((const char *)calib,12+seq.length());
+
+    delete calib;
+
+    if(cnt_bytes!=(12+(int)seq.length())) {
         qDebug() << "Failed to send calib";
         return -1;
     }
@@ -169,7 +193,7 @@ int droneControl::sendMovement(int seqNum, int flag, float leftRightTilt, float 
 
     delete move;
 
-    if(cnt_bytes!=(14+seq.length()+cflag.length()+lrTilt.length()+fbTilt.length()+vSpeed.length()+aSpeed.length())) {
+    if(cnt_bytes!=(14+(int)seq.length()+(int)cflag.length()+(int)lrTilt.length()+(int)fbTilt.length()+(int)vSpeed.length()+(int)aSpeed.length())) {
         qDebug() << "Failed to send land";
         return -1;
     }
@@ -179,14 +203,6 @@ int droneControl::sendMovement(int seqNum, int flag, float leftRightTilt, float 
 
 
 std::string droneControl::NumberToString (int Number)
-{
-     std::ostringstream ss;
-     ss << Number;
-     return ss.str();
-}
-
-
-std::string droneControl::NumberToString (float Number)
 {
      std::ostringstream ss;
      ss << Number;

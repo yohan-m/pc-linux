@@ -69,6 +69,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li class="current"><a href="functions.html"><span>All</span></a></li>
       <li><a href="functions_func.html"><span>Functions</span></a></li>
+      <li><a href="functions_vars.html"><span>Variables</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow4" class="tabs3">
+    <ul class="tablist">
+      <li><a href="#index_a"><span>a</span></a></li>
+      <li><a href="#index_c"><span>c</span></a></li>
+      <li><a href="#index_d"><span>d</span></a></li>
+      <li><a href="#index_h"><span>h</span></a></li>
+      <li><a href="#index_i"><span>i</span></a></li>
+      <li><a href="#index_n"><span>n</span></a></li>
+      <li><a href="#index_p"><span>p</span></a></li>
+      <li><a href="#index_q"><span>q</span></a></li>
+      <li><a href="#index_r"><span>r</span></a></li>
+      <li><a href="#index_s"><span>s</span></a></li>
+      <li><a href="#index_t"><span>t</span></a></li>
+      <li><a href="#index_u"><span>u</span></a></li>
+      <li><a href="#index_v"><span>v</span></a></li>
+      <li><a href="#index_w"><span>w</span></a></li>
+      <li class="current"><a href="#index_~"><span>~</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -77,7 +97,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -87,15 +107,51 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 
 <div class="contents">
-<div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div><ul>
+<div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div>
+
+<h3><a class="anchor" id="index_a"></a>- a -</h3><ul>
+<li>altitude
+: <a class="el" href="structNavdataDemo.html#a1ce49e0e492cc4bbce1c74d53c956eca">NavdataDemo</a>
+</li>
+<li>ardrone_state
+: <a class="el" href="structNavdata.html#ad44d17f7a55c6844d174d4d978fb78b0">Navdata</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
 <li>connect()
 : <a class="el" href="classWindow.html#a2733bcfa9a07113324b66e01a89a1fb8">Window</a>
 </li>
+<li>ctrl_state
+: <a class="el" href="structNavdataDemo.html#a23f42ad4c5ac6427ecc32d0aa40aa595">NavdataDemo</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
 <li>disconnect()
 : <a class="el" href="classWindow.html#a96a44a2584b9848d058aadff91ce4d20">Window</a>
 </li>
 <li>drawCanvas()
 : <a class="el" href="classPlot.html#a3bc3ac75ac24d391b15df0a5f1f9b4e4">Plot</a>
+</li>
+<li>droneNavData()
+: <a class="el" href="classdroneNavData.html#ac111bdde9cd253cb0eb9ec3ce67aa76f">droneNavData</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_h"></a>- h -</h3><ul>
+<li>header
+: <a class="el" href="structNavdata.html#aa1857794f8b225842bede9a99cbc1af9">Navdata</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
+<li>init()
+: <a class="el" href="classdroneNavData.html#a65306d7e38381404edb0874ba804fb5c">droneNavData</a>
 </li>
 <li>initWidgets()
 : <a class="el" href="classWindow.html#af2ff981e828f1aa24957e8080fed33a4">Window</a>
@@ -103,11 +159,96 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>initWindow()
 : <a class="el" href="classWindow.html#aad5118913017eb418cab8b4c216f57aa">Window</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_n"></a>- n -</h3><ul>
+<li>newAltFromBarometer()
+: <a class="el" href="classnavControlUI.html#abac2596ad77ebf69dac86bab7e20ad8e">navControlUI</a>
+</li>
+<li>newNavData()
+: <a class="el" href="classdroneNavData.html#acb35bfc903a25607bb652db220e60d0d">droneNavData</a>
+</li>
+<li>NumberToString()
+: <a class="el" href="classdroneControl.html#a217c0b47c1007d6e337e3fdbf9231b2b">droneControl</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
+<li>phi
+: <a class="el" href="structNavdataDemo.html#addc3052ebe92feb32cea95c03e8e1c46">NavdataDemo</a>
+</li>
 <li>processDatagram()
 : <a class="el" href="classUdpSocket.html#abab90176dae0818d9025f605209e0ce3">UdpSocket</a>
 </li>
+<li>psi
+: <a class="el" href="structNavdataDemo.html#aed73e970fb33c9bd31f59e41746656b0">NavdataDemo</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_q"></a>- q -</h3><ul>
+<li>qfi_ADI()
+: <a class="el" href="classqfi__ADI.html#ad6fada6186510d43d5c7d55f107ee14c">qfi_ADI</a>
+</li>
+<li>qfi_ASI()
+: <a class="el" href="classqfi__ASI.html#a80e457396f56b9f150a08d0baf4cb4d9">qfi_ASI</a>
+</li>
+<li>qfi_HSI()
+: <a class="el" href="classqfi__HSI.html#a41b11fb392c0b2471b6b45f74c3fc6b2">qfi_HSI</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
 <li>read()
 : <a class="el" href="classUdpSocket.html#a4f575273cf1629ed4a46d33b9d955100">UdpSocket</a>
+</li>
+<li>reinit()
+: <a class="el" href="classqfi__ADI.html#aa8554638d9981aaaa131e49eba37601e">qfi_ADI</a>
+, <a class="el" href="classqfi__ASI.html#a47f3843b5df32138c9c5638a3f6d9aff">qfi_ASI</a>
+, <a class="el" href="classqfi__HSI.html#aa69ee2276560377d8beb79d06cc82ddc">qfi_HSI</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
+<li>sendCalibHPlan()
+: <a class="el" href="classdroneControl.html#ada36f306563d99a6a7b733a9fe308063">droneControl</a>
+</li>
+<li>sendCalibMagn()
+: <a class="el" href="classdroneControl.html#a07660090ee3525b83ccf8be7d60a804c">droneControl</a>
+</li>
+<li>sendEmergency()
+: <a class="el" href="classdroneControl.html#a50de127109ffbaf351f0513d5f12d26b">droneControl</a>
+</li>
+<li>sendLand()
+: <a class="el" href="classdroneControl.html#a93cc5657f9445860a1194d442e2e4300">droneControl</a>
+</li>
+<li>sendMovement()
+: <a class="el" href="classdroneControl.html#aa5244c441c0afec68c0a3cc29d84705c">droneControl</a>
+</li>
+<li>sendResetWatchdog()
+: <a class="el" href="classdroneControl.html#a6c9969199f4702876db86d6da251669d">droneControl</a>
+</li>
+<li>sendTakeOff()
+: <a class="el" href="classdroneControl.html#a18702b66e1281c4796380acac7b98158">droneControl</a>
+</li>
+<li>sequence
+: <a class="el" href="structNavdata.html#abee72a1d3053ed0481471b09af11dc40">Navdata</a>
+</li>
+<li>setAirspeed()
+: <a class="el" href="classqfi__ASI.html#af1ca212447c8a0cc22f1eb5fb767eaa5">qfi_ASI</a>
+</li>
+<li>setHeading()
+: <a class="el" href="classqfi__HSI.html#a39f9c0994b467269099afa4b97a7e97d">qfi_HSI</a>
+</li>
+<li>setPitch()
+: <a class="el" href="classqfi__ADI.html#a11ce159651f0da19201535d97d9f83f1">qfi_ADI</a>
+</li>
+<li>setRoll()
+: <a class="el" href="classqfi__ADI.html#aaa08ffe255577df31f6ccb6bdc0b6f99">qfi_ADI</a>
 </li>
 <li>simu()
 : <a class="el" href="classWindow.html#af0f9e6300d2355fbbcbc04ec3bcbf76a">Window</a>
@@ -115,23 +256,80 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>simuDisplay()
 : <a class="el" href="classUdpSocket.html#a9027f05a3011cfeb721f13b6b4ebfe22">UdpSocket</a>
 </li>
+<li>size
+: <a class="el" href="structNavdataDemo.html#a4d92a66bb2aae43f8fa7445ec6879870">NavdataDemo</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
+<li>tag
+: <a class="el" href="structNavdataDemo.html#abf4b7715bd4d3af992df4220ecf93646">NavdataDemo</a>
+</li>
+<li>takeOffOrLand()
+: <a class="el" href="classnavControlUI.html#a02c191a93193e6e1ba2c323a5550c488">navControlUI</a>
+</li>
+<li>theta
+: <a class="el" href="structNavdataDemo.html#af78e4fa7c62008b76eb03dd4d553b792">NavdataDemo</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_u"></a>- u -</h3><ul>
 <li>UdpSocket()
 : <a class="el" href="classUdpSocket.html#acd386cff2c60fcd786883c8cfa117df8">UdpSocket</a>
 </li>
 <li>update()
-: <a class="el" href="classWindow.html#a59515fc5a56e86d5a46d771595daac55">Window</a>
+: <a class="el" href="classqfi__ADI.html#a9390c252c8e6de8d1ba6e3f89f892f98">qfi_ADI</a>
+, <a class="el" href="classqfi__ASI.html#af4ab2023eadf58d278b8baf3e6d4a3b9">qfi_ASI</a>
+, <a class="el" href="classqfi__HSI.html#a6693e29815c07cd3e54adc793de7e4f7">qfi_HSI</a>
+, <a class="el" href="classWindow.html#a59515fc5a56e86d5a46d771595daac55">Window</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_v"></a>- v -</h3><ul>
+<li>vbat
+: <a class="el" href="structNavdataDemo.html#a44137cb166fd0be035882b632f990dbb">NavdataDemo</a>
+</li>
+<li>vx
+: <a class="el" href="structNavdataDemo.html#af22d9cffb12edcc1970b99445428466b">NavdataDemo</a>
+</li>
+<li>vy
+: <a class="el" href="structNavdataDemo.html#af9bf7e9ff197e64cfbbebccf696c77d2">NavdataDemo</a>
+</li>
+<li>vz
+: <a class="el" href="structNavdataDemo.html#a31110eb2a75d32bbd3be30bc1446833f">NavdataDemo</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_w"></a>- w -</h3><ul>
 <li>wifiFrameRead()
 : <a class="el" href="classUdpSocket.html#a41699e943c35a0c4800339dda6378c1a">UdpSocket</a>
 </li>
 <li>write()
-: <a class="el" href="classUdpSocket.html#a3aba1f82aae7c3dc2b0b8487740a4c46">UdpSocket</a>
+: <a class="el" href="classdroneControl.html#a2d1bface4885b6df537c1287a37d8566">droneControl</a>
+, <a class="el" href="classUdpSocket.html#a3aba1f82aae7c3dc2b0b8487740a4c46">UdpSocket</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_~"></a>- ~ -</h3><ul>
+<li>~qfi_ADI()
+: <a class="el" href="classqfi__ADI.html#a47b3fde3fde41fdefbc166d197adf88d">qfi_ADI</a>
+</li>
+<li>~qfi_ASI()
+: <a class="el" href="classqfi__ASI.html#a59f7d0f0e5438fa794cd79c3e3894812">qfi_ASI</a>
+</li>
+<li>~qfi_HSI()
+: <a class="el" href="classqfi__HSI.html#ae4522f841c6a737e14d5bc606176f5a1">qfi_HSI</a>
 </li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 11 2014 16:57:55 for GUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 21 2014 18:12:29 for GUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

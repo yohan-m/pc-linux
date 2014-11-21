@@ -27,7 +27,7 @@ int droneNavData::init(int seqNum)
 
     int err = control->write((const char *)cfg,41+seq.length());
     qDebug() << cfg;
-    if(err!=(41+seq.length())) {
+    if(err!=(41+(int)seq.length())) {
         qDebug() << "Failed to send cfg packet";
         return -1;
     }
@@ -68,6 +68,6 @@ void droneNavData::slotRead()
         Navdata *nav = (Navdata*) datagram.data() ;
         NavdataDemo *navdataDemo = (NavdataDemo*) &nav->options[0] ;
 
-        emit newNavData(navdataDemo->vbat, navdataDemo->ctrl_state, navdataDemo->theta/1000, navdataDemo->phi/1000, navdataDemo->psi/1000, navdataDemo->altitude/1000, navdataDemo->vx, navdataDemo->vy, navdataDemo->vz);
+        emit newNavData(navdataDemo->vbat, navdataDemo->ctrl_state, navdataDemo->theta/1000, navdataDemo->phi/1000, navdataDemo->psi/1000, (double)((double)navdataDemo->altitude)/1000.0, navdataDemo->vx/10, navdataDemo->vy/10, navdataDemo->vz/10);
     }
 }

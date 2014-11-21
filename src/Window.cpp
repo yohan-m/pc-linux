@@ -8,7 +8,7 @@ Window::Window()
     QObject::connect(buttonDisconnect,SIGNAL(clicked()),this,SLOT(disconnect())) ;
     QObject::connect(buttonConnect,SIGNAL(clicked()),this,SLOT(connect())) ;
     QObject::connect(buttonSimu,SIGNAL(clicked()),this,SLOT(simu())) ;
-    QObject::connect(navControl,SIGNAL(newAlt(int)),this,SLOT(onChangeAltitudeByBarometer(int)));
+    QObject::connect(navControl,SIGNAL(newAltFromBarometer(double)),this,SLOT(onChangeAltitudeFromBarometer(double)));
 
     socketIsActive = false ;
     setFocusPolicy(Qt::StrongFocus) ;
@@ -102,7 +102,7 @@ void Window::update()
 }
 
 
-void Window::onChangeAltitudeByBarometer(int alt)
+void Window::onChangeAltitudeFromBarometer(double alt)
 {
     valueZ->setText(QString::number(alt));
     slider->setValue(alt);

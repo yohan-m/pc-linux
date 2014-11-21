@@ -56,6 +56,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /** Horizontal Situation Indicator widget. */
+
+/**
+ * @class qfi_HSI
+ * @brief Widget : Horizontal Situation Indicator
+ */
 class qfi_HSI : public QGraphicsView
 {
     Q_OBJECT

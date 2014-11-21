@@ -16,11 +16,20 @@
 #include "qfi_HSI.h"
 #include "qfi_ASI.h"
 
+#define MAX_CONSECUTIVE_TAKE_OFF_CMD 30
+/**
+ * @class navControlUI
+ * @brief Graphical interface for the control/NavData
+ */
 class navControlUI : public QVBoxLayout
 {
     Q_OBJECT
 public:
     explicit navControlUI(QWidget *parent = 0);
+
+    /**
+     * @brief The drone take off if it's landed, or land.
+     */
     void takeOffOrLand();
 
 private:
@@ -28,7 +37,9 @@ private:
     droneControl * control;
     QPushButton * initControlButton;
     QPushButton * stopControlButton;
-    QPushButton * calibButton;
+    QPushButton * emergencyButton;
+    QPushButton * calibHPlaneButton;
+    QPushButton * calibMagnButton;
     QPushButton * takeOffButton;
     QPushButton * landButton;
     QPushButton * upButton;
@@ -43,7 +54,6 @@ private:
 
     QGroupBox * navBox;
     droneNavData * navData;
-    QPushButton * initNavDataButton;
     QVBoxLayout * navLayout;
     QLabel * altLabel;
     QLabel * pitchLabel;
@@ -66,10 +76,15 @@ private:
     QPixmap * xMarkImage;
 
     int seqNumber;
+    int consecutiveTakeOffCmd;
+    bool initClicked;
+    bool emergencyClicked;
     bool flying;
     bool movement;
-    bool landClicked;
-    bool calibClicked;
+    int landState;
+    bool landed;
+    bool calibHPlaneClicked;
+    bool calibMagnClicked;
     bool takeOffClicked;
     bool upClicked;
     bool upPressed;
@@ -91,12 +106,18 @@ private:
     QTimer * timer;
 
 signals:
-    void newAlt(int alt);
+    /**
+     * @brief newAltFromBarometer
+     * @param alt
+     */
+    void newAltFromBarometer(double alt);
 
 public slots:
     void onClickInitControl();
     void onClickStopControl();
-    void onClickCalib();
+    void onClickEmergency();
+    void onClickCalibHPlane();
+    void onClickCalibMagn();
     void onClickTakeOff();
     void onClickLand();
     void onClickUp();
@@ -117,8 +138,7 @@ public slots:
     void onReleaseRLeft();
 
 private slots:
-    void onClickInitNavData();
-    void onChangeNavData(int bat, int state, int pitch, int roll, int yaw, int alt, int vx, int vy, int vz);
+    void onChangeNavData(int bat, int state, int pitch, int roll, int yaw, double alt, int vx, int vy, int vz);
     void controlManager();
 };
 #endif // NAVCONTROLUI_H

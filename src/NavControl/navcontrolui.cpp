@@ -9,12 +9,19 @@ navControlUI::navControlUI(QWidget *parent) :
 
     initControlButton = new QPushButton("Init");
     stopControlButton = new QPushButton("Stop");
+    emergencyButton = new QPushButton("Emergency");
     QHBoxLayout * initStopLayout = new QHBoxLayout();
     initStopLayout->addWidget(initControlButton);
     initStopLayout->addWidget(stopControlButton);
-    calibButton = new QPushButton("Calibrate");
+    initStopLayout->addWidget(emergencyButton);
+    calibHPlaneButton = new QPushButton("Calibrate H. plane");
+    calibMagnButton = new QPushButton("Calibrate magneto.");
     takeOffButton = new QPushButton("Take Off");
     landButton = new QPushButton("Land");
+
+    QHBoxLayout * calibLayout = new QHBoxLayout();
+    calibLayout->addWidget(calibHPlaneButton);
+    calibLayout->addWidget(calibMagnButton);
 
     upButton = new QPushButton("Up");
     downButton = new QPushButton("Down");
@@ -27,7 +34,8 @@ navControlUI::navControlUI(QWidget *parent) :
 
     initControlButton->setFocusPolicy( Qt::NoFocus );
     stopControlButton->setFocusPolicy( Qt::NoFocus );
-    calibButton->setFocusPolicy( Qt::NoFocus );
+    calibHPlaneButton->setFocusPolicy( Qt::NoFocus );
+    calibMagnButton->setFocusPolicy( Qt::NoFocus );
     takeOffButton->setFocusPolicy( Qt::NoFocus );
     landButton->setFocusPolicy( Qt::NoFocus );
     upButton->setFocusPolicy( Qt::NoFocus );
@@ -53,7 +61,7 @@ navControlUI::navControlUI(QWidget *parent) :
 
     controlLayout = new QVBoxLayout();
     controlLayout->addLayout(initStopLayout);
-    controlLayout->addWidget(calibButton);
+    controlLayout->addLayout(calibLayout);
     controlLayout->addWidget(takeOffButton);
     controlLayout->addWidget(landButton);
     controlLayout->addLayout(upDownLayout);
@@ -63,7 +71,9 @@ navControlUI::navControlUI(QWidget *parent) :
 
     QObject::connect(initControlButton,SIGNAL(clicked()),this,SLOT(onClickInitControl()));
     QObject::connect(stopControlButton,SIGNAL(clicked()),this,SLOT(onClickStopControl()));
-    QObject::connect(calibButton,SIGNAL(clicked()),this,SLOT(onClickCalib()));
+    QObject::connect(emergencyButton,SIGNAL(clicked()),this,SLOT(onClickEmergency()));
+    QObject::connect(calibHPlaneButton,SIGNAL(clicked()),this,SLOT(onClickCalibHPlane()));
+    QObject::connect(calibMagnButton,SIGNAL(clicked()),this,SLOT(onClickCalibMagn()));
     QObject::connect(takeOffButton,SIGNAL(clicked()),this,SLOT(onClickTakeOff()));
     QObject::connect(landButton,SIGNAL(clicked()),this,SLOT(onClickLand()));
 
@@ -95,10 +105,6 @@ navControlUI::navControlUI(QWidget *parent) :
     hsiAsiLayout->addWidget(hsi);
     hsiAsiLayout->addWidget(asi);
 
-    initNavDataButton = new QPushButton("Init");
-
-    initNavDataButton->setFocusPolicy( Qt::NoFocus );
-
     checkMarkImage = new QPixmap(":/img/images/checkmark16.png");
     warningMarkImage = new QPixmap(":/img/images/warningmark16.png");
     xMarkImage = new QPixmap(":/img/images/xmark16.png");
@@ -122,26 +128,29 @@ navControlUI::navControlUI(QWidget *parent) :
     batStateLayout->addLayout(stateLayout);
 
     navLayout = new QVBoxLayout();
-    navLayout->addWidget(initNavDataButton);
     navLayout->addWidget(adi,0,Qt::AlignCenter);
     navLayout->addLayout(hsiAsiLayout);
     navLayout->addLayout(batStateLayout);
     navBox->setLayout(navLayout);
-    navBox->setFixedHeight(390);
+    navBox->setFixedHeight(370);
 
-    QObject::connect(initNavDataButton,SIGNAL(clicked()),this,SLOT(onClickInitNavData()));
-    QObject::connect(navData,SIGNAL(newNavData(int, int, int, int, int, int, int, int, int)),this,SLOT(onChangeNavData(int, int, int, int, int, int, int, int, int)));
+    QObject::connect(navData,SIGNAL(newNavData(int, int, int, int, int, double, int, int, int)),this,SLOT(onChangeNavData(int, int, int, int, int, double, int, int, int)));
 
     //Widget
     addWidget(controlBox,0,Qt::AlignTop);
     addWidget(navBox,1,Qt::AlignTop);
 
     seqNumber = 1;
+    consecutiveTakeOffCmd = 0;
     flying = false;
+    initClicked = false;
 
     movement = false;
-    landClicked = false;
-    calibClicked = false;
+    emergencyClicked = false;
+    landState = 0;
+    landed = true;
+    calibHPlaneClicked = false;
+    calibMagnClicked = false;
     takeOffClicked = false;
     upClicked = false;
     upPressed = false;
@@ -171,17 +180,43 @@ void navControlUI::controlManager()
     float vSpeed = 0.0;
     float aSpeed = 0.0;
 
-    if(landClicked) {
+    if(initClicked) {
+        seqNumber = 1;
+        navData->init(seqNumber);
+        initClicked = false;
+    }
+    else if(landState==1) {
+        control->sendMovement(seqNumber,1,0.0,0.0,0.0,0);
+        landState = 2;
+    }
+    else if(landState==2) {
         control->sendLand(seqNumber);
-        landClicked = false;
+        landState = 0;
     }
-    else if(calibClicked) {
-        control->sendCalib(seqNumber);
-        calibClicked = false;
+    else if(calibHPlaneClicked) {
+        control->sendCalibHPlan(seqNumber);
+        calibHPlaneClicked = false;
     }
-    else if (takeOffClicked) {
+    else if (calibMagnClicked) {
+        control->sendCalibMagn(seqNumber);
+        calibMagnClicked = false;
+    }
+    else if (takeOffClicked && landed) {
         control->sendTakeOff(seqNumber);
+        consecutiveTakeOffCmd++;
+        if(consecutiveTakeOffCmd>=MAX_CONSECUTIVE_TAKE_OFF_CMD) {
+            consecutiveTakeOffCmd = 0;
+            takeOffClicked = false;
+        }
+    }
+    else if (takeOffClicked && !landed) {
+        control->sendMovement(seqNumber,0,0.0,0.0,0.0,0);
+        consecutiveTakeOffCmd = 0;
         takeOffClicked = false;
+    }
+    else if (emergencyClicked) {
+        control->sendEmergency(seqNumber);
+        emergencyClicked = false;
     }
     else if (upClicked || upPressed || downClicked || downPressed || forwardClicked || forwardPressed || backwardClicked || backwardPressed || rightClicked || rightPressed || leftClicked || leftPressed || rLeftClicked || rLeftPressed || rRightClicked || rRightPressed) {
         if (upClicked || upPressed) {
@@ -209,11 +244,11 @@ void navControlUI::controlManager()
             leftClicked = false;
         }
         if (rLeftClicked || rLeftPressed) {
-            aSpeed += 0.6;
+            aSpeed += -0.6;
             rLeftClicked = false;
         }
         if (rRightClicked || rRightPressed) {
-            aSpeed += -0.6;
+            aSpeed += 0.6;
             rRightClicked = false;
         }
         control->sendMovement(seqNumber,1,lrTilt,fbTilt,vSpeed,aSpeed);
@@ -233,6 +268,7 @@ void navControlUI::controlManager()
 void navControlUI::onClickInitControl()
 {
     timer->start(30);
+    initClicked = true;
 }
 
 void navControlUI::onClickStopControl()
@@ -240,9 +276,19 @@ void navControlUI::onClickStopControl()
     timer->stop();
 }
 
-void navControlUI::onClickCalib()
+void navControlUI::onClickEmergency()
 {
-    calibClicked = true;
+    emergencyClicked = true;
+}
+
+void navControlUI::onClickCalibHPlane()
+{
+    calibHPlaneClicked = true;
+}
+
+void navControlUI::onClickCalibMagn()
+{
+    calibMagnClicked = true;
 }
 
 void navControlUI::onClickTakeOff()
@@ -253,7 +299,7 @@ void navControlUI::onClickTakeOff()
 
 void navControlUI::onClickLand()
 {
-    landClicked = true;
+    landState = 1;
     flying = false;
 }
 
@@ -345,14 +391,7 @@ void navControlUI::onReleaseRRight()
     rRightPressed = false;
 }
 
-void navControlUI::onClickInitNavData()
-{
-    //onChangeNavData(50,7<<16,10,10,45,2,50,50,50);
-    navData->init(seqNumber);
-    seqNumber++;
-}
-
-void navControlUI::onChangeNavData(int bat, int state, int pitch, int roll, int yaw, int alt, int vx, int vy, int vz)
+void navControlUI::onChangeNavData(int bat, int state, int pitch, int roll, int yaw, double alt, int vx, int vy, int vz)
 {
     //battery
     if(bat > 25) {
@@ -374,6 +413,12 @@ void navControlUI::onChangeNavData(int bat, int state, int pitch, int roll, int 
     int i = state >> 16 ;
     if( i<10 )
     {
+        if(i==2) {
+            landed = true;
+        }
+        else {
+            landed = false;
+        }
         if(state==0) {
             stateImg->setPixmap(*xMarkImage);
         }
@@ -403,7 +448,7 @@ void navControlUI::onChangeNavData(int bat, int state, int pitch, int roll, int 
     asi->setAirspeed(sqrt(pow(vx,2)+pow(vy,2)+pow(vz,2)));
     asi->update();
 
-    emit newAlt(alt);
+    emit newAltFromBarometer(alt);
 }
 
 void navControlUI::takeOffOrLand()

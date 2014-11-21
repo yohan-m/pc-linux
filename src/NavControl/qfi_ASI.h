@@ -56,6 +56,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /** Airspeed Indicator widget. */
+
+/**
+ * @class qfi_ASI
+ * @brief Widget : Air Speed Indicator
+ */
 class qfi_ASI : public QGraphicsView
 {
     Q_OBJECT

@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -87,15 +87,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="textblock">Here are the classes, structs, unions and interfaces with brief descriptions:</div><div class="directory">
 <table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classPlot.html" target="_self">Plot</a></td><td class="desc">2D display widget </td></tr>
-<tr id="row_1_"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classUdpSocket.html" target="_self">UdpSocket</a></td><td class="desc">Udp socket of the remote pc </td></tr>
-<tr id="row_2_" class="even"><td class="entry"><img src="ftv2lastnode.png" alt="\" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classWindow.html" target="_self">Window</a></td><td class="desc">Main window of the GUI </td></tr>
+<tr id="row_0_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classdroneControl.html" target="_self">droneControl</a></td><td class="desc">Control the drone (takeoff/land/movements/emergency/calibrate), send AT-Command on port 5556 </td></tr>
+<tr id="row_1_"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classdroneNavData.html" target="_self">droneNavData</a></td><td class="desc">Manages the navData on port 5554 </td></tr>
+<tr id="row_2_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classnavControlUI.html" target="_self">navControlUI</a></td><td class="desc">Graphical interface for the control/NavData </td></tr>
+<tr id="row_3_"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="structNavdata.html" target="_self">Navdata</a></td><td class="desc">Structure for the NavData </td></tr>
+<tr id="row_4_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="structNavdataDemo.html" target="_self">NavdataDemo</a></td><td class="desc">Structure for the NavData demo </td></tr>
+<tr id="row_5_"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="structNavdataOption.html" target="_self">NavdataOption</a></td><td class="desc">Structure for the NavData option </td></tr>
+<tr id="row_6_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classPlot.html" target="_self">Plot</a></td><td class="desc">2D display widget </td></tr>
+<tr id="row_7_"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classqfi__ADI.html" target="_self">qfi_ADI</a></td><td class="desc">Widget : Attitude Director Indicator </td></tr>
+<tr id="row_8_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classqfi__ASI.html" target="_self">qfi_ASI</a></td><td class="desc">Widget : Air Speed Indicator </td></tr>
+<tr id="row_9_"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classqfi__HSI.html" target="_self">qfi_HSI</a></td><td class="desc">Widget : Horizontal Situation Indicator </td></tr>
+<tr id="row_10_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classUdpSocket.html" target="_self">UdpSocket</a></td><td class="desc">Udp socket of the remote pc </td></tr>
+<tr id="row_11_"><td class="entry"><img src="ftv2lastnode.png" alt="\" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classWindow.html" target="_self">Window</a></td><td class="desc">Main window of the GUI </td></tr>
 </table>
 </div><!-- directory -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 11 2014 16:57:55 for GUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 21 2014 18:12:29 for GUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -5,7 +5,9 @@
 
 #define CVAR(a) #a  /* Using # causes the first argument after the # to be returned as a string in quotes */
 #define CVARZ(a) #a
-
+/**
+ * @brief Structure for the NavData option
+ */
 typedef struct NavdataOption
 {
   uint16_t  tag;
@@ -15,6 +17,9 @@ typedef struct NavdataOption
 
 } NavdataOption ;
 
+/**
+ * @brief Structure for the NavData
+ */
 typedef struct Navdata
 {
   uint32_t    header;                   /*!< Always set to NAVDATA_HEADER */
@@ -26,6 +31,9 @@ typedef struct Navdata
 
 } Navdata ;
 
+/**
+ * @brief Structure for the NavData demo
+ */
 typedef struct NavdataDemo
 {
   uint16_t    tag;					     /*!< Navdata block ('option') identifier */

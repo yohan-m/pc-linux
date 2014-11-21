@@ -57,6 +57,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /** Attitude Director Indicator widget. */
+
+/**
+ * @class qfi_ADI
+ * @brief Widget : Attitude Director Indicator
+ */
 class qfi_ADI : public QGraphicsView
 {
     Q_OBJECT
