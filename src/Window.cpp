@@ -5,6 +5,8 @@ Window::Window()
     initWindow() ;
     initWidgets() ;
 
+    setWindowTitle("Localization system - AR.Drone 2.0");
+
     QObject::connect(buttonDisconnect,SIGNAL(clicked()),this,SLOT(disconnect())) ;
     QObject::connect(buttonConnect,SIGNAL(clicked()),this,SLOT(connect())) ;
     QObject::connect(buttonSimu,SIGNAL(clicked()),this,SLOT(simu())) ;
