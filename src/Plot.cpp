@@ -9,11 +9,11 @@ Plot::Plot(QWidget *parent) : QwtPlot(parent)
     grid->setPen(Qt::black);
     grid->attach(this);*/
 
-    setAxisScale(QwtPlot::xBottom,0,8,0.5);
-    setAxisScale(QwtPlot::yLeft,0,4,0.5);
+    setAxisScale(QwtPlot::xBottom,0,5.5,0.5);
+    setAxisScale(QwtPlot::yLeft,0,3.5,0.5);
 
-    setAxisTitle(QwtPlot::xBottom,QString("Length (m)")) ;
-    setAxisTitle(QwtPlot::yLeft,QString("Width (m)")) ;
+    setAxisTitle(QwtPlot::xBottom,QString("Y (m)")) ;
+    setAxisTitle(QwtPlot::yLeft,QString("X (m)")) ;
 
     setCanvasBackground(Qt::white);
 

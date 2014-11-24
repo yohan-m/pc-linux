@@ -45,10 +45,6 @@ class UdpSocket : public QUdpSocket
          */
         void simuDisplay() ;
 
-        double getPosX() ;
-        double getPosY() ;
-        double getPosZ() ;
-
     public slots:
 
         /*!
@@ -72,18 +68,14 @@ class UdpSocket : public QUdpSocket
          * \brief Signal emitted just after the data has been extracted from the frame
          *
          */
-        void wifiFrameRead();
+        void wifiFrameRead(double x, double y, double z);
 
     private:
         QTimer *timer ;
 
-        double posX ;
-        double posY ;
-        double posZ ;
         int counterX ;
         int counterY ;
         int counterZ ;
-        bool simu ;
 };
 
 #endif // UDPSOCKET_H

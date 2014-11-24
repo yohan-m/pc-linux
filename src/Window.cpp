@@ -64,7 +64,7 @@ void Window::initWidgets()
     slider = new QwtSlider() ;
     slider->setScalePosition(QwtSlider::LeadingScale);
     slider->setReadOnly(true);
-    slider->setScale(0,3.5) ;
+    slider->setScale(0,2.8) ;
     slider->setScaleStepSize(0.25);
     slider->setContentsMargins(30,20,20,10);
     slider->setFixedHeight(600);
@@ -82,13 +82,8 @@ void Window::initWidgets()
     this->setLayout(layout);
 }
 
-void Window::update()
+void Window::update(double x, double y, double z)
 {
-    //Get the new position sent from the drone
-    double x = udpSocket->getPosX() ;
-    double y = udpSocket->getPosY() ;
-    double z = udpSocket->getPosZ() ;
-
     //Update label
     valueX->setText(QString::number(x));
     valueY->setText(QString::number(y));
@@ -114,7 +109,7 @@ void Window::connect()
 {
     socketIsActive = true ;
     udpSocket = new UdpSocket() ;
-    QObject::connect(udpSocket,SIGNAL(wifiFrameRead()),this,SLOT(update())) ;
+    QObject::connect(udpSocket,SIGNAL(wifiFrameRead(double, double, double)),this,SLOT(update(double, double, double))) ;
 }
 
 void Window::disconnect()

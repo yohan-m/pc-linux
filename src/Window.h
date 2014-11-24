@@ -56,7 +56,7 @@ class Window : public QWidget
          * It gets the new position received to update the display
          *
          */
-        void update();
+        void update(double x, double y, double z);
 
         /*!
          * \brief Simulation
