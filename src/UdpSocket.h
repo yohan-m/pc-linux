@@ -70,12 +70,14 @@ class UdpSocket : public QUdpSocket
          */
         void wifiFrameRead(double x, double y, double z);
 
+        void missionStateChanged(char state) ;
+
     private:
         QTimer *timer ;
 
-        int counterX ;
-        int counterY ;
-        int counterZ ;
+        double counterX ;
+        double counterY ;
+        double counterZ ;
 };
 
 #endif // UDPSOCKET_H

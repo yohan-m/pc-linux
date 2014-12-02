@@ -34,9 +34,11 @@ class Plot :  public QwtPlot
 
 private:
         QwtPlotGrid *grid ;
+        QPixmap *img ;
 
         double posX ;
         double posY ;
+
 };
 
 #endif // PLOT_H

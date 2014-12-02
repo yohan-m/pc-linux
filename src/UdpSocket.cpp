@@ -11,16 +11,16 @@ void UdpSocket::write()
 {
     //Creation of the frame
     wifiFrame wf ;
-    counterX += 5 ;
-    counterY += 5 ;
+    counterX += 4 ;
+    counterY += 8 ;
     counterZ += 5 ;
-    wf = createWifiFrame(TIME_FRAME,counterX,counterY,counterZ) ;
+    wf = createWifiFrame(TIME_FRAME,counterX,counterY,counterZ,STOP_MISSION) ;
 
     //Conversion of the frame in *char
     char * tab = wifiFrameToChar(wf) ;
 
     //Send the frame
-    writeDatagram(tab, sizeof(char)*19, QHostAddress::LocalHost, 31000) ;
+    writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress::LocalHost, 31000) ;
 }
 
 void UdpSocket::read()
@@ -45,6 +45,10 @@ void UdpSocket::read()
             char *tab = wifiFrameToChar(wf) ;
             writeDatagram(tab,sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, sender, senderPort) ;
          }
+         else if(wf.type == MISSION_FRAME)
+         {
+             emit missionStateChanged(wf.stateMission) ;
+         }
          else
             processDatagram(wf) ;
      }
@@ -58,9 +62,13 @@ void UdpSocket::processDatagram(wifiFrame wf)
     qDebug() << "y: " << wf.positions[1] ;
     qDebug() << "z: " << wf.positions[2] ;
 
-    double posX = (double)wf.positions[0]/100 ;
-    double posY = (double)wf.positions[1]/100 ;
-    double posZ = (double)wf.positions[2]/100 ;
+    qDebug() << "posX : " << wf.positions[0] ;
+
+    double posX = (double)(wf.positions[0])/(double)100.0 ;
+    double posY = (double)(wf.positions[1])/(double)100.0 ;
+    double posZ = (double)(wf.positions[2])/(double)100.0 ;
+
+    qDebug() << "posX : " << posX ;
 
     emit wifiFrameRead(posX, posY, posZ);
 }
@@ -68,8 +76,8 @@ void UdpSocket::processDatagram(wifiFrame wf)
 void UdpSocket::simuDisplay()
 {
     //Used to test the real time display with incremented values sent from localhost
-    counterX = 0 ;
-    counterY = 0 ;
+    counterX = 3.5/2 ;
+    counterY = 5.5/2 ;
     counterZ = 0 ;
 
     //Init of the timer which will call the write function

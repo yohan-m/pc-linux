@@ -1,4 +1,5 @@
 #include "Plot.h"
+#include <QLabel>
 
 Plot::Plot(QWidget *parent) : QwtPlot(parent)
 {
@@ -17,8 +18,10 @@ Plot::Plot(QWidget *parent) : QwtPlot(parent)
 
     setCanvasBackground(Qt::white);
 
-    posX = 0 ;
-    posY = 0 ;
+    img = new QPixmap(":/img/images/drone.jpg") ;
+
+    posX = 3.5/2 ;
+    posY = 5.5/2 ;
 }
 
 void Plot::drawCanvas(QPainter *painter)
@@ -26,11 +29,18 @@ void Plot::drawCanvas(QPainter *painter)
     painter->setPen(Qt::black);
     painter->setBrush(Qt::black);
 
-    double x = transform(QwtPlot::xBottom,posX) ;
-    double y = transform(QwtPlot::yLeft,posY) ;
+    double x = transform(QwtPlot::xBottom,posY) ;
+    double y = transform(QwtPlot::yLeft,posX) ;
 
-    painter->drawEllipse(x,y,10,10) ;
+    x = x - img->width()/2 ;
+    y = y - img->height()/2 ;
+
+    painter->drawPixmap(x,y,*img);
+
+    //painter->drawEllipse(x,y,10,10) ;
 }
+
+QImage m_image;
 
 void Plot::setPosX(double x)
 {

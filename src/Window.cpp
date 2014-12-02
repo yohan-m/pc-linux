@@ -11,9 +11,13 @@ Window::Window()
     QObject::connect(buttonConnect,SIGNAL(clicked()),this,SLOT(connect())) ;
     QObject::connect(buttonSimu,SIGNAL(clicked()),this,SLOT(simu())) ;
     QObject::connect(navControl,SIGNAL(newAltFromBarometer(double)),this,SLOT(onChangeAltitudeFromBarometer(double)));
+    QObject::connect(launchMissionButton,SIGNAL(clicked()),this,SLOT(onLaunchMissionClicked()));
+    QObject::connect(stopMissionButton,SIGNAL(clicked()),this,SLOT(onStopMissionClicked()));
 
     socketIsActive = false ;
     setFocusPolicy(Qt::StrongFocus) ;
+
+    missionState = STOP_MISSION ;
 }
 
 Window::~Window()
@@ -30,32 +34,59 @@ void Window::initWindow()
 
 void Window::initWidgets()
 {
-    //Control widgets
+    //Communication
     buttonConnect = new QPushButton("Connect") ;
     buttonDisconnect = new QPushButton("Disconnect") ;
     buttonSimu = new QPushButton("Simulation Display") ;
 
-    labelX = new QLabel("X");
-    labelX->setAlignment(Qt::AlignCenter);
-    labelY = new QLabel("Y") ;
-    labelY->setAlignment(Qt::AlignCenter);
-    labelZ = new QLabel("Z") ;
-    labelZ->setAlignment(Qt::AlignCenter);
-
-    valueX = new QLabel("none") ;
-    valueY = new QLabel("none") ;
-    valueZ = new QLabel("none") ;
-
     QGridLayout *grid = new QGridLayout() ;
     grid->addWidget(buttonConnect,0,0);
     grid->addWidget(buttonDisconnect,0,1);
-    grid->addWidget(buttonSimu,1,0);
-    grid->addWidget(labelX,2,0);
-    grid->addWidget(valueX,2,1);
-    grid->addWidget(labelY,3,0);
-    grid->addWidget(valueY,3,1);
-    grid->addWidget(labelZ,4,0);
-    grid->addWidget(valueZ,4,1);
+    grid->addWidget(buttonSimu,1,0,1,2);
+
+    //Box Position
+    valueX = new QLabel("0.0") ;
+    valueY = new QLabel("0.0") ;
+    valueZ = new QLabel("0.0") ;
+
+    QFormLayout *formPosition = new QFormLayout() ;
+    formPosition->addRow("Position x", valueX) ;
+    formPosition->addRow("Position y", valueY) ;
+    formPosition->addRow("Position z", valueZ) ;
+    formPosition->setHorizontalSpacing(50);
+
+    //Box Mission
+    launchMissionButton = new QPushButton("Start Mission") ;
+    stopMissionButton = new QPushButton("Stop Mision") ;
+    stateMissionLabel = new QLabel("STOPPED") ;
+
+    spinX = new QDoubleSpinBox() ;
+    spinY = new QDoubleSpinBox() ;
+    spinZ = new QDoubleSpinBox() ;
+
+    QGridLayout *controlMission = new QGridLayout() ;
+    controlMission->addWidget(launchMissionButton,1,1);
+    controlMission->addWidget(stopMissionButton,1,2);
+    controlMission->addWidget(new QLabel("State Mission :"),2,1) ;
+    controlMission->addWidget(stateMissionLabel,2,2) ;
+    QFormLayout *formMission = new QFormLayout() ;
+    formMission->addRow("Position x", spinX) ;
+    formMission->addRow("Position y", spinY) ;
+    formMission->addRow("Position z", spinZ) ;
+    formMission->setVerticalSpacing(30);
+    formMission->setHorizontalSpacing(25);
+    QVBoxLayout *layoutMission = new QVBoxLayout() ;
+    layoutMission->addLayout(controlMission);
+    layoutMission->addLayout(formMission);
+
+    //Left Layout
+    QVBoxLayout *leftLayout = new QVBoxLayout() ;
+    leftLayout->addLayout(grid);
+    leftLayout->addLayout(formPosition);
+    leftLayout->addLayout(layoutMission);
+    leftLayout->setSpacing(20) ;
+    leftLayout->setContentsMargins(20,60,20,60) ;
+    //leftLayout->setAlignment(Qt::AlignTop) ;
 
     //2D display widget
     plot = new Plot(this) ;
@@ -74,7 +105,7 @@ void Window::initWidgets()
 
     //Main Layout
     QHBoxLayout *layout = new QHBoxLayout() ;
-    layout->addLayout(grid) ;
+    layout->addLayout(leftLayout) ;
     layout->addWidget(plot) ;
     layout->addWidget(slider);
     layout->addLayout(navControl);
@@ -110,6 +141,7 @@ void Window::connect()
     socketIsActive = true ;
     udpSocket = new UdpSocket() ;
     QObject::connect(udpSocket,SIGNAL(wifiFrameRead(double, double, double)),this,SLOT(update(double, double, double))) ;
+    QObject::connect(udpSocket,SIGNAL(missionStateChanged(char)),this,SLOT(onChangeMissionState(char)));
 }
 
 void Window::disconnect()
@@ -122,6 +154,34 @@ void Window::simu()
 {
     if(socketIsActive)
         udpSocket->simuDisplay();
+}
+
+void Window::onLaunchMissionClicked()
+{
+    double xMission = spinX->value() ;
+    double yMission = spinY->value() ;
+    double zMission = spinZ->value() ;
+
+    wifiFrame wf = createWifiFrame(MISSION_FRAME,xMission,yMission,zMission,LAUNCH_MISSION) ;
+    char *frame = wifiFrameToChar(wf) ;
+
+    while(missionState != LAUNCH_MISSION)
+    {
+        udpSocket->writeDatagram(frame,sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), 31000) ;
+        QThread::sleep(1) ;
+    }
+}
+
+void Window::onStopMissionClicked()
+{
+    wifiFrame wf = createWifiFrame(MISSION_FRAME,0.0,0.0,0.0,STOP_MISSION) ;
+    char *frame = wifiFrameToChar(wf) ;
+
+    while(missionState != STOP_MISSION)
+    {
+        udpSocket->writeDatagram(frame,sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), 31000) ;
+        QThread::sleep(1) ;
+    }
 }
 
 void Window::keyPressEvent(QKeyEvent *event)
@@ -200,3 +260,17 @@ void Window::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
+void Window::onChangeMissionState(char state)
+{
+    missionState = state ;
+    QString str ;
+
+    if (state == LAUNCH_MISSION)
+        str = "Mission Started" ;
+    else if (state == STOP_MISSION)
+        str = "Mission Stopped" ;
+    else if(state == MISSION_FINISHED)
+        str = "Mission Finished" ;
+
+    stateMissionLabel->setText(str);
+}

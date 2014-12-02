@@ -35,7 +35,7 @@ class Window : public QWidget
          */
         void initWidgets() ;
 
-    public slots:
+public slots:
 
         /*!
          * \brief Create a udp Socket waiting a frame to read
@@ -68,6 +68,10 @@ class Window : public QWidget
          */
         void simu() ;
 
+        void onLaunchMissionClicked() ;
+        void onStopMissionClicked() ;
+        void onChangeMissionState(char state);
+
         virtual void keyPressEvent(QKeyEvent* event);
         virtual void keyReleaseEvent(QKeyEvent* event);
         void onChangeAltitudeFromBarometer(double alt);
@@ -77,13 +81,17 @@ class Window : public QWidget
         QPushButton *buttonConnect ;
         QPushButton *buttonDisconnect ;
         QPushButton *buttonSimu ;
+        QPushButton *launchMissionButton ;
+        QPushButton *stopMissionButton ;
 
-        QLabel *labelX ;
-        QLabel *labelY ;
-        QLabel *labelZ ;
+        QDoubleSpinBox *spinX ;
+        QDoubleSpinBox *spinY ;
+        QDoubleSpinBox *spinZ ;
+
         QLabel *valueX ;
         QLabel *valueY ;
         QLabel *valueZ ;
+        QLabel *stateMissionLabel ;
 
         //Qwt widgets
         Plot *plot ;
@@ -95,6 +103,8 @@ class Window : public QWidget
 
         //NavControl
         navControlUI * navControl;
+
+        char missionState ;
 
 };
 

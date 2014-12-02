@@ -16,5 +16,6 @@
         <file>images/hsi_case.svg</file>
         <file>images/hsi_face.svg</file>
         <file>images/hsi_case.png</file>
+        <file>images/drone.jpg</file>
     </qresource>
 </RCC>
