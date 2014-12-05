@@ -10,8 +10,10 @@
 #include <QTimer>
 #include <QPixmap>
 #include <cmath>
+#include "wifiFrame.h"
 #include "dronecontrol.h"
 #include "dronenavdata.h"
+#include "UdpSocket.h"
 #include "qfi_ADI.h"
 #include "qfi_HSI.h"
 #include "qfi_ASI.h"
@@ -31,6 +33,8 @@ public:
      * @brief The drone take off if it's landed, or land.
      */
     void takeOffOrLand();
+
+    void setControler(char controler);
 
 private:
     QGroupBox * controlBox;
@@ -102,6 +106,9 @@ private:
     bool rRightPressed;
     bool rLeftClicked;
     bool rLeftPressed;
+
+    char controler ;
+    UdpSocket* udpSocket ;
 
     QTimer * timer;
 

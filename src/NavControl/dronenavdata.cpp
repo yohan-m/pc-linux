@@ -12,7 +12,7 @@ droneNavData::droneNavData(droneControl * control_init) : QUdpSocket()
 
 int droneNavData::init(int seqNum)
 {
-    char init[] = {1,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    /*char init[] = {1,0,0,0,0,0,0,0,0,0,0,0,0,0};
     int cnt_bytes = write((const char *)init,14);
     if(cnt_bytes!=14) {
         qDebug() << "Failed to send init packet";
@@ -67,6 +67,11 @@ void droneNavData::slotRead()
 
         Navdata *nav = (Navdata*) datagram.data() ;
         NavdataDemo *navdataDemo = (NavdataDemo*) &nav->options[0] ;
+
+        //qDebug() << "vx : " << navdataDemo->vx ;
+
+        qDebug() << "vy : " << navdataDemo->vy ;
+
 
         emit newNavData(navdataDemo->vbat, navdataDemo->ctrl_state, navdataDemo->theta/1000, navdataDemo->phi/1000, navdataDemo->psi/1000, (double)((double)navdataDemo->altitude)/1000.0, navdataDemo->vx/10, navdataDemo->vy/10, navdataDemo->vz/10);
     }

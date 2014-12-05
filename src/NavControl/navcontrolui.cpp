@@ -169,6 +169,8 @@ navControlUI::navControlUI(QWidget *parent) :
     rLeftClicked = false;
     rLeftPressed = false;
 
+    controler = PC_CTRL ;
+
     timer = new QTimer();
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(controlManager()));
 }
@@ -181,77 +183,150 @@ void navControlUI::controlManager()
     float aSpeed = 0.0;
 
     if(initClicked) {
-        seqNumber = 1;
-        navData->init(seqNumber);
+        if (controler == PC_CTRL)
+        {
+            seqNumber = 1;
+            navData->init(seqNumber);
+        }
+        else
+            udpSocket->sendFrameDrone(createCmdFrame(CMD_INIT_NAVDATA)) ;
+
         initClicked = false;
     }
     else if(landState==1) {
-        control->sendMovement(seqNumber,1,0.0,0.0,0.0,0);
+        if (controler == PC_CTRL)
+            control->sendMovement(seqNumber,1,0.0,0.0,0.0,0);
+        else
+            udpSocket->sendFrameDrone(createCmdFrame(CMD_LAND)) ;
+
         landState = 2;
     }
     else if(landState==2) {
-        control->sendLand(seqNumber);
+        if (controler == PC_CTRL)
+            control->sendLand(seqNumber);
+        else
+            udpSocket->sendFrameDrone(createCmdFrame(CMD_LAND)) ;
+
         landState = 0;
     }
     else if(calibHPlaneClicked) {
-        control->sendCalibHPlan(seqNumber);
+        if (controler == PC_CTRL)
+            control->sendCalibHPlan(seqNumber);
+        else
+            udpSocket->sendFrameDrone(createCmdFrame(CMD_FTRIM)) ;
+
         calibHPlaneClicked = false;
     }
     else if (calibMagnClicked) {
-        control->sendCalibMagn(seqNumber);
+        if (controler == PC_CTRL)
+            control->sendCalibMagn(seqNumber);
+        else
+            udpSocket->sendFrameDrone(createCmdFrame(CMD_CALIB_MAGNO)) ;
+
         calibMagnClicked = false;
     }
     else if (takeOffClicked && landed) {
-        control->sendTakeOff(seqNumber);
+        if (controler == PC_CTRL)
+            control->sendTakeOff(seqNumber);
+        else
+            udpSocket->sendFrameDrone(createCmdFrame(CMD_TAKE_OFF)) ;
+
         consecutiveTakeOffCmd++;
-        if(consecutiveTakeOffCmd>=MAX_CONSECUTIVE_TAKE_OFF_CMD) {
+        if(consecutiveTakeOffCmd>=MAX_CONSECUTIVE_TAKE_OFF_CMD)
+            consecutiveTakeOffCmd = 0;
+
+        takeOffClicked = false;
+    }
+    else if (takeOffClicked && !landed) {
+        if (controler == PC_CTRL)
+        {
+            control->sendMovement(seqNumber,0,0.0,0.0,0.0,0);
             consecutiveTakeOffCmd = 0;
             takeOffClicked = false;
         }
     }
-    else if (takeOffClicked && !landed) {
-        control->sendMovement(seqNumber,0,0.0,0.0,0.0,0);
-        consecutiveTakeOffCmd = 0;
-        takeOffClicked = false;
-    }
     else if (emergencyClicked) {
-        control->sendEmergency(seqNumber);
-        emergencyClicked = false;
+        if (controler == PC_CTRL)
+            control->sendEmergency(seqNumber);
+        else
+            udpSocket->sendFrameDrone(createCmdFrame(CMD_EMERGENCY)) ;
+
+        emergencyClicked = false ;
     }
     else if (upClicked || upPressed || downClicked || downPressed || forwardClicked || forwardPressed || backwardClicked || backwardPressed || rightClicked || rightPressed || leftClicked || leftPressed || rLeftClicked || rLeftPressed || rRightClicked || rRightPressed) {
-        if (upClicked || upPressed) {
-            vSpeed += 0.6;
-            upClicked = false;
+
+        if(controler == PC_CTRL)
+        {
+            if (upClicked || upPressed) {
+                vSpeed += 0.6;
+                upClicked = false;
+            }
+            if (downClicked || downPressed) {
+                vSpeed += -0.6;
+                downClicked = false;
+            }
+            if (forwardClicked || forwardPressed) {
+                fbTilt += -0.4;
+                forwardClicked = false;
+            }
+            if (backwardClicked || backwardPressed) {
+                fbTilt += 0.4;
+                backwardClicked = false;
+            }
+            if (rightClicked || rightPressed) {
+                lrTilt += 0.4;
+                rightClicked = false;
+            }
+            if (leftClicked || leftPressed) {
+                lrTilt += -0.4;
+                leftClicked = false;
+            }
+            if (rLeftClicked || rLeftPressed) {
+                aSpeed += -0.6;
+                rLeftClicked = false;
+            }
+            if (rRightClicked || rRightPressed) {
+                aSpeed += 0.6;
+                rRightClicked = false;
+            }
+            control->sendMovement(seqNumber,1,lrTilt,fbTilt,vSpeed,aSpeed);
         }
-        if (downClicked || downPressed) {
-            vSpeed += -0.6;
-            downClicked = false;
+        else
+        {
+            if (upClicked || upPressed) {
+                udpSocket->sendFrameDrone(createCmdFrame(CMD_UP)) ;
+                upClicked = false;
+            }
+            if (downClicked || downPressed) {
+                udpSocket->sendFrameDrone(createCmdFrame(CMD_DOWN)) ;
+                downClicked = false;
+            }
+            if (forwardClicked || forwardPressed) {
+                udpSocket->sendFrameDrone(createCmdFrame(CMD_FWD)) ;
+                forwardClicked = false;
+            }
+            if (backwardClicked || backwardPressed) {
+                udpSocket->sendFrameDrone(createCmdFrame(CMD_BWD)) ;
+                backwardClicked = false;
+            }
+            if (rightClicked || rightPressed) {
+                udpSocket->sendFrameDrone(createCmdFrame(CMD_RIGHT)) ;
+                rightClicked = false;
+            }
+            if (leftClicked || leftPressed) {
+                udpSocket->sendFrameDrone(createCmdFrame( CMD_LEFT)) ;
+                leftClicked = false;
+            }
+            if (rLeftClicked || rLeftPressed) {
+                udpSocket->sendFrameDrone(createCmdFrame(CMD_ROTATE_LEFT)) ;
+                rLeftClicked = false;
+            }
+            if (rRightClicked || rRightPressed) {
+                udpSocket->sendFrameDrone(createCmdFrame(CMD_ROTATE_RIGHT)) ;
+                rRightClicked = false;
+            }
         }
-        if (forwardClicked || forwardPressed) {
-            fbTilt += -0.4;
-            forwardClicked = false;
-        }
-        if (backwardClicked || backwardPressed) {
-            fbTilt += 0.4;
-            backwardClicked = false;
-        }
-        if (rightClicked || rightPressed) {
-            lrTilt += 0.4;
-            rightClicked = false;
-        }
-        if (leftClicked || leftPressed) {
-            lrTilt += -0.4;
-            leftClicked = false;
-        }
-        if (rLeftClicked || rLeftPressed) {
-            aSpeed += -0.6;
-            rLeftClicked = false;
-        }
-        if (rRightClicked || rRightPressed) {
-            aSpeed += 0.6;
-            rRightClicked = false;
-        }
-        control->sendMovement(seqNumber,1,lrTilt,fbTilt,vSpeed,aSpeed);
+
         movement = true;
     }
     else if (movement) {
@@ -259,7 +334,8 @@ void navControlUI::controlManager()
         movement = false;
     }
     else {
-        control->sendResetWatchdog(seqNumber);
+        if (controler == PC_CTRL)
+            control->sendResetWatchdog(seqNumber);
     }
 
     seqNumber++;
@@ -459,4 +535,9 @@ void navControlUI::takeOffOrLand()
     else {
         onClickLand();
     }
+}
+
+void navControlUI::setControler(char controler)
+{
+    controler = controler ;
 }

@@ -71,6 +71,7 @@ public slots:
         void onLaunchMissionClicked() ;
         void onStopMissionClicked() ;
         void onChangeMissionState(char state);
+        void onChangeRadioButton();
 
         virtual void keyPressEvent(QKeyEvent* event);
         virtual void keyReleaseEvent(QKeyEvent* event);
@@ -87,6 +88,11 @@ public slots:
         QDoubleSpinBox *spinX ;
         QDoubleSpinBox *spinY ;
         QDoubleSpinBox *spinZ ;
+        QDoubleSpinBox *spinAngle ;
+
+        QCheckBox *checkEmmetteur ;
+        QRadioButton *radioButtonDrone ;
+        QRadioButton *radioButtonPc ;
 
         QLabel *valueX ;
         QLabel *valueY ;
@@ -103,8 +109,6 @@ public slots:
 
         //NavControl
         navControlUI * navControl;
-
-        char missionState ;
 
 };
 

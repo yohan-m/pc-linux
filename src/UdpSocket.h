@@ -45,7 +45,10 @@ class UdpSocket : public QUdpSocket
          */
         void simuDisplay() ;
 
-    public slots:
+        void sendFrameDrone(wifiFrame wf);
+
+
+public slots:
 
         /*!
          * \brief Send a wifiFrame to the drone

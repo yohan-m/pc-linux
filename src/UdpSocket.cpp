@@ -2,7 +2,7 @@
 
 UdpSocket::UdpSocket() : QUdpSocket()
 {
-    bind(31000,QUdpSocket::ShareAddress) ;
+    bind(PC_PORT,QUdpSocket::ShareAddress) ;
 
     QObject::connect(this,SIGNAL(readyRead()),this,SLOT(read())) ;
 }
@@ -14,13 +14,20 @@ void UdpSocket::write()
     counterX += 4 ;
     counterY += 8 ;
     counterZ += 5 ;
-    wf = createWifiFrame(TIME_FRAME,counterX,counterY,counterZ,STOP_MISSION) ;
+    wf = createPositionFrame(counterX,counterY,counterZ) ;
 
     //Conversion of the frame in *char
-    char * tab = wifiFrameToChar(wf) ;
+    char *tab = (char*)&wf ;
 
     //Send the frame
-    writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress::LocalHost, 31000) ;
+    writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress::LocalHost, DRONE_PORT) ;
+}
+
+void UdpSocket::sendFrameDrone(wifiFrame wf)
+{
+    //Conversion of the frame in *char
+    char *tab = (char*)&wf ;
+    writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
 }
 
 void UdpSocket::read()
@@ -37,12 +44,11 @@ void UdpSocket::read()
          //Read the frame and store it in tab
          readDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, &sender, &senderPort) ;
 
-         wf = wifiFrameFromChar(tab) ;
+         wf = *(wifiFrame*)tab;
 
          if(wf.type == DISCOVERY_FRAME)
          {
             //Send back the discovery frame received to the sender
-            char *tab = wifiFrameToChar(wf) ;
             writeDatagram(tab,sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, sender, senderPort) ;
          }
          else if(wf.type == MISSION_FRAME)
@@ -58,7 +64,7 @@ void UdpSocket::processDatagram(wifiFrame wf)
 {
     qDebug() << "Num Seq: " << wf.seqNum ;
     qDebug() << "Type: " << wf.type ;
-    qDebug() << "x: " << wf.positions[0];
+    qDebug() << "x: " << wf.positions[0] ;
     qDebug() << "y: " << wf.positions[1] ;
     qDebug() << "z: " << wf.positions[2] ;
 
@@ -76,8 +82,8 @@ void UdpSocket::processDatagram(wifiFrame wf)
 void UdpSocket::simuDisplay()
 {
     //Used to test the real time display with incremented values sent from localhost
-    counterX = 3.5/2 ;
-    counterY = 5.5/2 ;
+    counterX = 4.2/2 ;
+    counterY = 6.6/2 ;
     counterZ = 0 ;
 
     //Init of the timer which will call the write function

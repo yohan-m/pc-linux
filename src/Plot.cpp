@@ -10,8 +10,8 @@ Plot::Plot(QWidget *parent) : QwtPlot(parent)
     grid->setPen(Qt::black);
     grid->attach(this);*/
 
-    setAxisScale(QwtPlot::xBottom,0,5.5,0.5);
-    setAxisScale(QwtPlot::yLeft,0,3.5,0.5);
+    setAxisScale(QwtPlot::xBottom,0,6.6,0.5);
+    setAxisScale(QwtPlot::yLeft,0,4.2,0.5);
 
     setAxisTitle(QwtPlot::xBottom,QString("Y (m)")) ;
     setAxisTitle(QwtPlot::yLeft,QString("X (m)")) ;
@@ -20,8 +20,8 @@ Plot::Plot(QWidget *parent) : QwtPlot(parent)
 
     img = new QPixmap(":/img/images/drone.jpg") ;
 
-    posX = 3.5/2 ;
-    posY = 5.5/2 ;
+    posX = 4.2/2 ;
+    posY = 6.6/2 ;
 }
 
 void Plot::drawCanvas(QPainter *painter)

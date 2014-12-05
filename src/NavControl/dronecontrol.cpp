@@ -1,6 +1,5 @@
 #include "dronecontrol.h"
 
-
 droneControl::droneControl() : QUdpSocket()
 {
     bind(QHostAddress(UDP_ADDR_DRONE),UDP_PORT_DRONE);
@@ -31,7 +30,6 @@ int droneControl::sendResetWatchdog(int seqNum)
 
     return 0;
 }
-
 
 int droneControl::sendEmergency(int seqNum)
 {
