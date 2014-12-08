@@ -40,7 +40,7 @@ void Window::initWidgets()
     buttonSimu = new QPushButton("Simulation Display") ;
     radioButtonDrone = new QRadioButton("Drone control") ;
     radioButtonPc = new QRadioButton("PC control") ;
-    radioButtonPc->setChecked(true);
+    radioButtonDrone->setChecked(true);
 
     QGridLayout *grid = new QGridLayout() ;
     grid->addWidget(buttonConnect,0,0);
@@ -166,6 +166,7 @@ void Window::connect()
 {
     socketIsActive = true ;
     udpSocket = new UdpSocket() ;
+    navControl->setUdpSocket(udpSocket);
     QObject::connect(udpSocket,SIGNAL(wifiFrameRead(double, double, double)),this,SLOT(update(double, double, double))) ;
     QObject::connect(udpSocket,SIGNAL(missionStateChanged(char)),this,SLOT(onChangeMissionState(char)));
 }

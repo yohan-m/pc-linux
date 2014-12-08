@@ -36,6 +36,8 @@ public:
 
     void setControler(char controler);
 
+    void setUdpSocket(UdpSocket * sock);
+
 private:
     QGroupBox * controlBox;
     droneControl * control;

@@ -32,7 +32,7 @@ void UdpSocket::sendFrameDrone(wifiFrame wf)
 
 void UdpSocket::read()
 {
-     qDebug() << "Lecture activée" ;
+     //qDebug() << "Lecture activée" ;
 
      QHostAddress sender ;
      quint16 senderPort;
@@ -62,19 +62,19 @@ void UdpSocket::read()
 
 void UdpSocket::processDatagram(wifiFrame wf)
 {
-    qDebug() << "Num Seq: " << wf.seqNum ;
+    /*qDebug() << "Num Seq: " << wf.seqNum ;
     qDebug() << "Type: " << wf.type ;
     qDebug() << "x: " << wf.positions[0] ;
     qDebug() << "y: " << wf.positions[1] ;
     qDebug() << "z: " << wf.positions[2] ;
 
-    qDebug() << "posX : " << wf.positions[0] ;
+    qDebug() << "posX : " << wf.positions[0] ;*/
 
     double posX = (double)(wf.positions[0])/(double)100.0 ;
     double posY = (double)(wf.positions[1])/(double)100.0 ;
     double posZ = (double)(wf.positions[2])/(double)100.0 ;
 
-    qDebug() << "posX : " << posX ;
+    //qDebug() << "posX : " << posX ;
 
     emit wifiFrameRead(posX, posY, posZ);
 }

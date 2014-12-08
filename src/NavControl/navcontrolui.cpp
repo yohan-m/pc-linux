@@ -169,7 +169,7 @@ navControlUI::navControlUI(QWidget *parent) :
     rLeftClicked = false;
     rLeftPressed = false;
 
-    controler = PC_CTRL ;
+    controler = DRONE_CTRL ;
 
     timer = new QTimer();
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(controlManager()));
@@ -540,4 +540,9 @@ void navControlUI::takeOffOrLand()
 void navControlUI::setControler(char controler)
 {
     controler = controler ;
+}
+
+void navControlUI::setUdpSocket(UdpSocket * sock)
+{
+    udpSocket = sock;
 }
