@@ -53,6 +53,7 @@ void UdpSocket::read()
          }
          else if(wf.type == MISSION_FRAME)
          {
+             qDebug()<<"mission frame received";
              emit missionStateChanged(wf.stateMission) ;
          }
          else

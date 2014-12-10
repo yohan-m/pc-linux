@@ -190,7 +190,7 @@ void Window::onLaunchMissionClicked()
     double zMission = spinZ->value() ;
     double angle = spinAngle->value() ;
 
-    wifiFrame wf = createMissionFrame(xMission,yMission,zMission,angle,LAUNCH_MISSION) ;
+    wifiFrame wf = createMissionFrame(xMission*100,yMission*100,zMission*100,angle,LAUNCH_MISSION) ;
     char *tab = (char*)&wf ;
 
     udpSocket->writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
@@ -200,7 +200,7 @@ void Window::onLaunchMissionClicked()
 
 void Window::onStopMissionClicked()
 {
-    wifiFrame wf = createMissionFrame(0.0,0.0,0.0,0.0,LAUNCH_MISSION) ;
+    wifiFrame wf = createMissionFrame(0.0,0.0,0.0,0.0,STOP_MISSION) ;
     char *tab = (char*)&wf ;
 
     udpSocket->writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
@@ -286,6 +286,7 @@ void Window::keyReleaseEvent(QKeyEvent *event)
 
 void Window::onChangeMissionState(char state)
 {
+    qDebug() << "on change mission state called";
     if(state == MISSION_FINISHED)
         stateMissionLabel->setText("Mission Finished");
 }
