@@ -1,5 +1,6 @@
 #include "dronenavdata.h"
 #include "struct.h"
+#include "defines.h"
 
 droneNavData::droneNavData(droneControl * control_init) : QUdpSocket()
 {
@@ -72,7 +73,9 @@ void droneNavData::slotRead()
 
         //qDebug() << "vy : " << navdataDemo->vy ;
 
+        qDebug() << "psi :" << navdataDemo->psi/1000 ;
 
-        emit newNavData(navdataDemo->vbat, navdataDemo->ctrl_state, navdataDemo->theta/1000, navdataDemo->phi/1000, navdataDemo->psi/1000, (double)((double)navdataDemo->altitude)/1000.0, navdataDemo->vx/10, navdataDemo->vy/10, navdataDemo->vz/10);
+
+        emit newNavData(navdataDemo->vbat, navdataDemo->ctrl_state, navdataDemo->theta/1000, navdataDemo->phi/1000, navdataDemo->psi/1000 - BIAIS, (double)((double)navdataDemo->altitude)/1000.0, navdataDemo->vx/10, navdataDemo->vy/10, navdataDemo->vz/10);
     }
 }

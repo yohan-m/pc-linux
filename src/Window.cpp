@@ -71,7 +71,7 @@ void Window::initWidgets()
     //Box Mission
     launchMissionButton = new QPushButton("Start Mission") ;
     stopMissionButton = new QPushButton("Stop Mision") ;
-    stateMissionLabel = new QLabel("M") ;
+    stateMissionLabel = new QLabel("No Mission") ;
 
     spinX = new QDoubleSpinBox() ;
     spinX->setMaximum(4.2) ;
@@ -142,17 +142,20 @@ void Window::initWidgets()
 void Window::update(double x, double y, double z)
 {
     //Update label
-    valueX->setText(QString::number(x));
-    valueY->setText(QString::number(y));
-    valueZ->setText(QString::number(z));
+    if (x < 4.3)
+        valueX->setText(QString::number(x));
+    else
+        valueX->setText("> 4.3");
+
+    if (y < 6.6)
+        valueY->setText(QString::number(y));
+    else
+        valueX->setText("> 6.6");
 
     //Update 2D display
     plot->setPosX(x);
     plot->setPosY(y);
     plot->replot();
-
-    //Update height slider
-    slider->setValue(z);
 }
 
 
@@ -300,6 +303,7 @@ void Window::onChangeRadioButton()
          wf = createChangeMasterFrame(PC_CTRL) ;
          char *tab = (char*)&wf ;
          udpSocket->writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
+         navControl->setControler(PC_CTRL);
     }
     else if (radioButtonDrone->isChecked())
     {
@@ -307,5 +311,6 @@ void Window::onChangeRadioButton()
 
          char *tab = (char*)&wf ;
          udpSocket->writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
+         navControl->setControler(DRONE_CTRL);
     }
 }
