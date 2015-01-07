@@ -75,7 +75,7 @@ void UdpSocket::processDatagram(wifiFrame wf)
     double posY = (double)(wf.positions[1])/(double)100.0 ;
     double posZ = (double)(wf.positions[2])/(double)100.0 ;
 
-    //qDebug() << "posX : " << posX ;
+    qDebug() << "posX : " << posX ;
 
     emit wifiFrameRead(posX, posY, posZ);
 }

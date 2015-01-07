@@ -35,6 +35,8 @@ class Window : public QWidget
          */
         void initWidgets() ;
 
+        void updateMission();
+
 public slots:
 
         /*!
@@ -72,6 +74,7 @@ public slots:
         void onStopMissionClicked() ;
         void onChangeMissionState(char state);
         void onChangeRadioButton();
+        void onChangeButtonMissionCarre() ;
 
         virtual void keyPressEvent(QKeyEvent* event);
         virtual void keyReleaseEvent(QKeyEvent* event);
@@ -84,6 +87,7 @@ public slots:
         QPushButton *buttonSimu ;
         QPushButton *launchMissionButton ;
         QPushButton *stopMissionButton ;
+        QPushButton *buttonMissionCarre ;
 
         QDoubleSpinBox *spinX ;
         QDoubleSpinBox *spinY ;
@@ -109,6 +113,8 @@ public slots:
 
         //NavControl
         navControlUI * navControl;
+
+        int numMission ;
 
 };
 

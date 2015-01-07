@@ -1,5 +1,24 @@
 #include "Window.h"
 
+#define x1  1.60
+#define y1  4.40
+#define z1  0.80
+
+#define x2  1.60
+#define y2  4.40
+#define z2  0.80
+
+#define x3  3.00
+#define y3  4.50
+#define z3  0.80
+
+#define x4  3.00
+#define y4  2.00
+#define z4  0.80
+
+#define angleDrone  0.0
+
+
 Window::Window()
 {
     initWindow() ;
@@ -15,6 +34,7 @@ Window::Window()
     QObject::connect(stopMissionButton,SIGNAL(clicked()),this,SLOT(onStopMissionClicked()));
     QObject::connect(radioButtonDrone,SIGNAL(clicked()),this,SLOT(onChangeRadioButton()));
     QObject::connect(radioButtonPc,SIGNAL(clicked()),this,SLOT(onChangeRadioButton()));
+    QObject::connect(buttonMissionCarre,SIGNAL(clicked()),this,SLOT(onChangeButtonMissionCarre()));
 
     socketIsActive = false ;
     setFocusPolicy(Qt::StrongFocus) ;
@@ -71,6 +91,7 @@ void Window::initWidgets()
     //Box Mission
     launchMissionButton = new QPushButton("Start Mission") ;
     stopMissionButton = new QPushButton("Stop Mision") ;
+    buttonMissionCarre = new QPushButton("Mission carré") ;
     stateMissionLabel = new QLabel("No Mission") ;
 
     spinX = new QDoubleSpinBox() ;
@@ -90,7 +111,8 @@ void Window::initWidgets()
     controlMission->addWidget(stopMissionButton,0,1);
     controlMission->addWidget(new QLabel("State Mission :"),1,0) ;
     controlMission->addWidget(stateMissionLabel,1,1) ;
-    controlMission->setVerticalSpacing(20);
+    controlMission->addWidget(buttonMissionCarre,2,0) ;
+    controlMission->setVerticalSpacing(20) ;
     QFormLayout *formMission = new QFormLayout() ;
     formMission->addRow("Position x (m)", spinX) ;
     formMission->addRow("Position y (m)", spinY) ;
@@ -150,7 +172,12 @@ void Window::update(double x, double y, double z)
     if (y < 6.6)
         valueY->setText(QString::number(y));
     else
-        valueX->setText("> 6.6");
+        valueY->setText("> 6.6");
+
+    if (z < 2.8)
+        valueZ->setText(QString::number(z));
+    else
+        valueZ->setText("> 2.8");
 
     //Update 2D display
     plot->setPosX(x);
@@ -188,6 +215,15 @@ void Window::simu()
 
 void Window::onLaunchMissionClicked()
 {
+    if (spinX->value() == 0.0)
+        spinX->setValue(valueX->text().toDouble()) ;
+
+    if (spinY->value() == 0.0)
+        spinY->setValue(valueY->text().toDouble()) ;
+
+    if (spinZ->value() == 0.0)
+        spinZ->setValue(valueZ->text().toDouble()) ;
+
     double xMission = spinX->value() ;
     double yMission = spinY->value() ;
     double zMission = spinZ->value() ;
@@ -209,6 +245,8 @@ void Window::onStopMissionClicked()
     udpSocket->writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
 
     stateMissionLabel->setText("Mission Stopped") ;
+
+    numMission = 4 ;
 }
 
 void Window::keyPressEvent(QKeyEvent *event)
@@ -291,7 +329,10 @@ void Window::onChangeMissionState(char state)
 {
     qDebug() << "on change mission state called";
     if(state == MISSION_FINISHED)
+    {
         stateMissionLabel->setText("Mission Finished");
+        updateMission() ;
+    }
 }
 
 void Window::onChangeRadioButton()
@@ -313,4 +354,48 @@ void Window::onChangeRadioButton()
          udpSocket->writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
          navControl->setControler(DRONE_CTRL);
     }
+}
+
+void Window::updateMission()
+{
+    numMission ++ ;
+    wifiFrame wf ;
+
+    switch (numMission)
+    {
+        case 1 :
+            QThread::sleep(2) ;
+            wf = createMissionFrame(x2*100,y2*100,z2*100,angleDrone,LAUNCH_MISSION)  ;
+            stateMissionLabel->setText("Mission 2") ;
+            break ;
+        case 2 :
+            QThread::sleep(2) ;
+            wf = createMissionFrame(x3*100,y3*100,z3*100,angleDrone,LAUNCH_MISSION) ;
+            stateMissionLabel->setText("Mission 3") ;
+            break ;
+        case 3 :
+            QThread::sleep(2) ;
+            wf = createMissionFrame(x4*100,y4*100,z4*100,angleDrone,LAUNCH_MISSION) ;
+            stateMissionLabel->setText("Mission 4") ;
+            break ;
+        default:
+            wf = createMissionFrame(0.0,0.0,0.0,0.0,STOP_MISSION) ;
+            stateMissionLabel->setText("Mission Stop") ;
+            break ;
+   }
+
+            char *tab = (char*)&wf ;
+            udpSocket->writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
+}
+
+void Window::onChangeButtonMissionCarre()
+{
+    numMission = 0 ;
+
+    wifiFrame wf = createMissionFrame(x1*100,y1*100,z1*100,angleDrone,LAUNCH_MISSION)  ;
+    char *tab = (char*)&wf ;
+    udpSocket->writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
+
+    stateMissionLabel->setText("Mission 1") ;
+
 }
