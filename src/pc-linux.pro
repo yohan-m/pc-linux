@@ -1,4 +1,6 @@
-QT += widgets network svg
+QT += widgets
+QT += svg
+QT += network
 
 CONFIG += qwt
 

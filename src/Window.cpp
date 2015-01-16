@@ -28,13 +28,9 @@ Window::Window()
 
     QObject::connect(buttonDisconnect,SIGNAL(clicked()),this,SLOT(disconnect())) ;
     QObject::connect(buttonConnect,SIGNAL(clicked()),this,SLOT(connect())) ;
-    QObject::connect(buttonSimu,SIGNAL(clicked()),this,SLOT(simu())) ;
     QObject::connect(navControl,SIGNAL(newAltFromBarometer(double)),this,SLOT(onChangeAltitudeFromBarometer(double)));
     QObject::connect(launchMissionButton,SIGNAL(clicked()),this,SLOT(onLaunchMissionClicked()));
     QObject::connect(stopMissionButton,SIGNAL(clicked()),this,SLOT(onStopMissionClicked()));
-    QObject::connect(radioButtonDrone,SIGNAL(clicked()),this,SLOT(onChangeRadioButton()));
-    QObject::connect(radioButtonPc,SIGNAL(clicked()),this,SLOT(onChangeRadioButton()));
-    QObject::connect(buttonMissionCarre,SIGNAL(clicked()),this,SLOT(onChangeButtonMissionCarre()));
 
     socketIsActive = false ;
     setFocusPolicy(Qt::StrongFocus) ;
@@ -57,33 +53,25 @@ void Window::initWidgets()
     //Communication
     buttonConnect = new QPushButton("Connect") ;
     buttonDisconnect = new QPushButton("Disconnect") ;
-    buttonSimu = new QPushButton("Simulation Display") ;
-    radioButtonDrone = new QRadioButton("Drone control") ;
-    radioButtonPc = new QRadioButton("PC control") ;
-    radioButtonDrone->setChecked(true);
 
     QGridLayout *grid = new QGridLayout() ;
     grid->addWidget(buttonConnect,0,0);
     grid->addWidget(buttonDisconnect,0,1);
-    grid->addWidget(buttonSimu,1,0,1,2);
-    grid->addWidget(radioButtonDrone,2,0);
-    grid->addWidget(radioButtonPc,2,1);
-    grid->setVerticalSpacing(20) ;
 
     QGroupBox *boxCommunication = new QGroupBox("Communication", this);
     boxCommunication->setLayout(grid) ;
 
     //Box Position
-    valueX = new QLabel("0.0") ;
-    valueY = new QLabel("0.0") ;
-    valueZ = new QLabel("0.0") ;
+    valueX = new QLabel("3.4") ;
+    valueY = new QLabel("4.2") ;
+    valueZ = new QLabel("1.0") ;
 
     QFormLayout *formPosition = new QFormLayout() ;
-    formPosition->addRow("Position x", valueX) ;
-    formPosition->addRow("Position y", valueY) ;
-    formPosition->addRow("Position z", valueZ) ;
+    formPosition->addRow("Position x (m)", valueX) ;
+    formPosition->addRow("Position y (m)", valueY) ;
+    formPosition->addRow("Position z (m)", valueZ) ;
     formPosition->setHorizontalSpacing(100);
-    formPosition->setVerticalSpacing(20) ;
+    formPosition->setVerticalSpacing(40) ;
 
     QGroupBox *boxPosition = new QGroupBox("Position", this);
     boxPosition->setLayout(formPosition) ;
@@ -91,7 +79,6 @@ void Window::initWidgets()
     //Box Mission
     launchMissionButton = new QPushButton("Start Mission") ;
     stopMissionButton = new QPushButton("Stop Mision") ;
-    buttonMissionCarre = new QPushButton("Mission carré") ;
     stateMissionLabel = new QLabel("No Mission") ;
 
     spinX = new QDoubleSpinBox() ;
@@ -109,16 +96,18 @@ void Window::initWidgets()
     QGridLayout *controlMission = new QGridLayout() ;
     controlMission->addWidget(launchMissionButton,0,0);
     controlMission->addWidget(stopMissionButton,0,1);
-    controlMission->addWidget(new QLabel("State Mission :"),1,0) ;
+    QLabel *label = new QLabel("Sate Mission") ;
+    label->setContentsMargins(0,0,0,20);
+    controlMission->addWidget(label,1,0) ;
+    stateMissionLabel->setContentsMargins(0,0,0,20);
     controlMission->addWidget(stateMissionLabel,1,1) ;
-    controlMission->addWidget(buttonMissionCarre,2,0) ;
-    controlMission->setVerticalSpacing(20) ;
+    controlMission->setVerticalSpacing(40) ;
     QFormLayout *formMission = new QFormLayout() ;
     formMission->addRow("Position x (m)", spinX) ;
     formMission->addRow("Position y (m)", spinY) ;
     formMission->addRow("Position z (m)", spinZ) ;
     formMission->addRow("Angle (°)", spinAngle) ;
-    formMission->setVerticalSpacing(20);
+    formMission->setVerticalSpacing(40);
     formMission->setHorizontalSpacing(20);
     QVBoxLayout *layoutMission = new QVBoxLayout() ;
     layoutMission->addLayout(controlMission);
@@ -133,7 +122,7 @@ void Window::initWidgets()
     leftLayout->addWidget(boxCommunication);
     leftLayout->addWidget(boxPosition);
     leftLayout->addWidget(boxMission);
-    leftLayout->setSpacing(30) ;
+    leftLayout->setSpacing(10) ;
     leftLayout->setContentsMargins(20,25,20,25) ;
 
     //2D display widget
@@ -147,6 +136,7 @@ void Window::initWidgets()
     slider->setScaleStepSize(0.25);
     slider->setContentsMargins(30,20,20,10);
     slider->setFixedHeight(600);
+    slider->setValue(1);
 
     //Control box
     navControl = new navControlUI();
@@ -165,7 +155,7 @@ void Window::update(double x, double y, double z)
 {
     //Update label
     if (x < 4.3)
-        valueX->setText(QString::number(x));
+        valueX->setText(QString::number(z));
     else
         valueX->setText("> 4.3");
 
@@ -207,14 +197,18 @@ void Window::disconnect()
     delete udpSocket ;
 }
 
-void Window::simu()
-{
-    if(socketIsActive)
-        udpSocket->simuDisplay();
-}
-
 void Window::onLaunchMissionClicked()
 {
+    wifiFrame wf ;
+    char *tab ;
+
+    wf = createChangeMasterFrame(DRONE_CTRL) ;
+    tab = (char*)&wf ;
+    udpSocket->writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
+    navControl->setControler(DRONE_CTRL);
+
+    QThread::sleep(0.5) ;
+
     if (spinX->value() == 0.0)
         spinX->setValue(valueX->text().toDouble()) ;
 
@@ -229,8 +223,8 @@ void Window::onLaunchMissionClicked()
     double zMission = spinZ->value() ;
     double angle = spinAngle->value() ;
 
-    wifiFrame wf = createMissionFrame(xMission*100,yMission*100,zMission*100,angle,LAUNCH_MISSION) ;
-    char *tab = (char*)&wf ;
+    wf = createMissionFrame(xMission*100,yMission*100,zMission*100,angle,LAUNCH_MISSION) ;
+    tab = (char*)&wf ;
 
     udpSocket->writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
 
@@ -331,32 +325,16 @@ void Window::onChangeMissionState(char state)
     if(state == MISSION_FINISHED)
     {
         stateMissionLabel->setText("Mission Finished");
-        updateMission() ;
+
+        wifiFrame wf = createChangeMasterFrame(PC_CTRL) ;
+        char *tab = (char*)&wf ;
+        udpSocket->writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
+        navControl->setControler(PC_CTRL);
     }
 }
 
-void Window::onChangeRadioButton()
-{
-    wifiFrame wf ;
 
-    if (radioButtonPc->isChecked())
-    {
-         wf = createChangeMasterFrame(PC_CTRL) ;
-         char *tab = (char*)&wf ;
-         udpSocket->writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
-         navControl->setControler(PC_CTRL);
-    }
-    else if (radioButtonDrone->isChecked())
-    {
-         wf = createChangeMasterFrame(DRONE_CTRL) ;
-
-         char *tab = (char*)&wf ;
-         udpSocket->writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
-         navControl->setControler(DRONE_CTRL);
-    }
-}
-
-void Window::updateMission()
+/*void Window::updateMission()
 {
     numMission ++ ;
     wifiFrame wf ;
@@ -386,7 +364,7 @@ void Window::updateMission()
 
             char *tab = (char*)&wf ;
             udpSocket->writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress("192.168.1.1"), DRONE_PORT) ;
-}
+}*/
 
 void Window::onChangeButtonMissionCarre()
 {

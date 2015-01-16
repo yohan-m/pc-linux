@@ -2,10 +2,12 @@
 #define WINDOW_H
 
 #include <QtWidgets>
+#include <QtNetwork>
 #include <qwt_slider.h>
 #include "UdpSocket.h"
 #include "Plot.h"
 #include "NavControl/navcontrolui.h"
+
 
 /*! \class Window
  *  \brief Main window of the GUI
@@ -60,20 +62,10 @@ public slots:
          */
         void update(double x, double y, double z);
 
-        /*!
-         * \brief Simulation
-         *
-         * This slot is called when the button "Simulation Display" is clicked
-         * It allows to simulate a real time display by sending a frame with 3D position from localhost
-         * each 100ms
-         *
-         */
-        void simu() ;
 
         void onLaunchMissionClicked() ;
         void onStopMissionClicked() ;
         void onChangeMissionState(char state);
-        void onChangeRadioButton();
         void onChangeButtonMissionCarre() ;
 
         virtual void keyPressEvent(QKeyEvent* event);
@@ -87,7 +79,6 @@ public slots:
         QPushButton *buttonSimu ;
         QPushButton *launchMissionButton ;
         QPushButton *stopMissionButton ;
-        QPushButton *buttonMissionCarre ;
 
         QDoubleSpinBox *spinX ;
         QDoubleSpinBox *spinY ;

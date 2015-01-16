@@ -20,8 +20,8 @@ Plot::Plot(QWidget *parent) : QwtPlot(parent)
 
     img = new QPixmap(":/img/images/drone.jpg") ;
 
-    posX = 4.2/2 ;
-    posY = 6.6/2 ;
+    posX = 3.4 ;//4.2/2 ;
+    posY = 4.2 ;//6.6/2 ;
 }
 
 void Plot::drawCanvas(QPainter *painter)
