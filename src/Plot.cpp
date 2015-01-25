@@ -20,27 +20,43 @@ Plot::Plot(QWidget *parent) : QwtPlot(parent)
 
     img = new QPixmap(":/img/images/drone.jpg") ;
 
-    posX = 3.4 ;//4.2/2 ;
-    posY = 4.2 ;//6.6/2 ;
+    posX = 4.2/2 ;
+    posY = 6.6/2 ;
+
+    xMission = 0 ;
+    yMission = 0 ;
+    missionActive = false ;
 }
 
 void Plot::drawCanvas(QPainter *painter)
 {
-    painter->setPen(Qt::black);
-    painter->setBrush(Qt::black);
+    double x ;
+    double y ;
 
-    double x = transform(QwtPlot::xBottom,posY) ;
-    double y = transform(QwtPlot::yLeft,posX) ;
+    if(missionActive)
+    {
+        x = transform(QwtPlot::xBottom,yMission) ;
+        y = transform(QwtPlot::yLeft,xMission) ;
+        x -= 20 ;
+        y -= 20;
+
+        QPen pen (Qt::red);
+        pen.setWidth(5) ;
+        painter->setPen(pen);
+        painter->setBrush(Qt::white);
+        painter->drawEllipse(x,y,35,35);
+    }
+
+    x = transform(QwtPlot::xBottom,posY) ;
+    y = transform(QwtPlot::yLeft,posX) ;
 
     x = x - img->width()/2 ;
     y = y - img->height()/2 ;
 
+    painter->setPen(Qt::black);
+    painter->setBrush(Qt::black);
     painter->drawPixmap(x,y,*img);
-
-    //painter->drawEllipse(x,y,10,10) ;
 }
-
-QImage m_image;
 
 void Plot::setPosX(double x)
 {
@@ -50,4 +66,16 @@ void Plot::setPosX(double x)
 void Plot::setPosY(double y)
 {
     posY = y;
+}
+
+void Plot::drawTarget(double x, double y)
+{
+    missionActive = true ;
+    xMission = x ;
+    yMission = y ;
+}
+
+void Plot::removeTarget()
+{
+    missionActive = false ;
 }

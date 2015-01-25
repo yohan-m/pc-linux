@@ -169,7 +169,7 @@ navControlUI::navControlUI(QWidget *parent) :
     rLeftClicked = false;
     rLeftPressed = false;
 
-    controler = PC_CTRL ;
+    controler = DRONE_CTRL ;
     timer = new QTimer();
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(controlManager()));
 }

@@ -31,6 +31,8 @@ class Plot :  public QwtPlot
 
         void setPosX(double x);
         void setPosY(double y);
+        void drawTarget(double xMission, double yMission);
+        void removeTarget();
 
 private:
         QwtPlotGrid *grid ;
@@ -38,6 +40,9 @@ private:
 
         double posX ;
         double posY ;
+        double xMission ;
+        double yMission ;
+        bool missionActive ;
 
 };
 

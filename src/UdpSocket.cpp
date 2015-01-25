@@ -20,7 +20,7 @@ void UdpSocket::write()
     char *tab = (char*)&wf ;
 
     //Send the frame
-    writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress::LocalHost, DRONE_PORT) ;
+    writeDatagram(tab, sizeof(char)*CONVERTED_WIFI_FRAME_SIZE, QHostAddress::LocalHost, PC_PORT) ;
 }
 
 void UdpSocket::sendFrameDrone(wifiFrame wf)
@@ -53,7 +53,6 @@ void UdpSocket::read()
          }
          else if(wf.type == MISSION_FRAME)
          {
-             qDebug()<<"mission frame received";
              emit missionStateChanged(wf.stateMission) ;
          }
          else
@@ -63,14 +62,6 @@ void UdpSocket::read()
 
 void UdpSocket::processDatagram(wifiFrame wf)
 {
-    /*qDebug() << "Num Seq: " << wf.seqNum ;
-    qDebug() << "Type: " << wf.type ;
-    qDebug() << "x: " << wf.positions[0] ;
-    qDebug() << "y: " << wf.positions[1] ;
-    qDebug() << "z: " << wf.positions[2] ;
-
-    qDebug() << "posX : " << wf.positions[0] ;*/
-
     double posX = (double)(wf.positions[0])/(double)100.0 ;
     double posY = (double)(wf.positions[1])/(double)100.0 ;
     double posZ = (double)(wf.positions[2])/(double)100.0 ;
@@ -83,8 +74,8 @@ void UdpSocket::processDatagram(wifiFrame wf)
 void UdpSocket::simuDisplay()
 {
     //Used to test the real time display with incremented values sent from localhost
-    counterX = 4.2/2 ;
-    counterY = 6.6/2 ;
+    counterX = 0 ;
+    counterY = 0 ;
     counterZ = 0 ;
 
     //Init of the timer which will call the write function
